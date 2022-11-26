@@ -1,0 +1,17 @@
+<html>
+    <div>
+        <a href = "{{url_for('login')}}">Login</a>
+        <a href = "{{url_for('kurzy')}}">Kurzy</a>
+        <a href = "{{url_for('mainPage')}}">Home</a>
+        <a href = "{{url_for('logout')}}">Logout</a>
+    </div>
+    {% block content %}
+    <h1>{% block title %} Kurzy {% endblock %}</h1>
+    {% for course in courses %}
+        <div class='course'>
+            <h3>#{{ course[0] }} - {{ course[2] }} vyučuje: {{ course[1] }}</h3>
+            <h4 class='popis'>Popis: {{ course[3] }}</h4>
+        </div>
+    {% endfor %}
+{% endblock %}
+</html>

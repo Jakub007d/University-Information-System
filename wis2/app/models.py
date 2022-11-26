@@ -67,6 +67,21 @@ class User:
         conn.close()
         return False
 
+class Courses :
+    def fetchAll(self):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM corses ;')
+        courses = cur.fetchall()
+        return courses
+
+    def fetchByUsername(self,username):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM corses WHERE login=\''+username+'\';')
+        courses = cur.fetchall()
+        return courses
+
 
 
 

@@ -1,7 +1,8 @@
 <html>
     <div>
         <a href = "{{url_for('login')}}">Login</a>
-        <a href = "{{url_for('mainPage')}}">Kurzy</a>
+        <a href = "{{url_for('kurzy')}}">Kurzy</a>
+        <a href = "{{url_for('mainPage')}}">Home</a>
         <a href = "{{url_for('logout')}}">Logout</a>
         {% block content %}
         {% if login == "admin" %}

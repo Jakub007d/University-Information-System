@@ -13,16 +13,20 @@ conn = psycopg2.connect(
 cur = conn.cursor()
 
 # Execute a command: this creates a new table
-cur.execute('DROP TABLE IF EXISTS users;')
-cur.execute('CREATE TABLE users (id serial PRIMARY KEY,'
-                                 'login varchar (8) NOT NULL,'
+cur.execute('DROP TABLE IF EXISTS users CASCADE;')
+cur.execute('DROP TABLE IF EXISTS corses CASCADE;')
+cur.execute('CREATE TABLE users (login varchar (8) NOT NULL PRIMARY KEY,'
                                  'name varchar (150) NOT NULL,'
                                  'adress varchar (150) NOT NULL,'
                                  'enrollment_date date NOT NULL,'
                                  'password TEXT NOT NULL);'
                                  # TODO password budze
                                  )
-
+cur.execute('CREATE TABLE corses (id serial PRIMARY KEY,'
+                                 'login TEXT REFERENCES users (login),'
+                                 'name varchar (50) NOT NULL,'
+                                 'description varchar (250) NOT NULL);'
+                                 )
 # Insert data into the table
 
 
@@ -64,6 +68,20 @@ cur.execute('INSERT INTO users (login, name, adress, enrollment_date,password)'
              'Ulica Kukucinova 12, Vychodne, 98458, Slovensko',
              '1999-08-31',
              heslo.decode('utf8')
+             )
+            )
+cur.execute('INSERT INTO corses (login, name, description)'
+            'VALUES (%s, %s, %s)',
+            ('xsanch00',
+             'IIS', # Another great classic!
+             'Tvorenie informačných systémov'
+             )
+            )
+cur.execute('INSERT INTO corses (login, name, description)'
+            'VALUES (%s, %s, %s)',
+            ('admin',
+             'IAS', # Another great classic!
+             'Administrativa informacnych systemov'
              )
             )
 

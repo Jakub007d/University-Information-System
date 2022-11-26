@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect,url_for,flash,session
 from app import app
-from app.models import User
+from app.models import User ,Courses
 from app.forms import LoginForm
 from app.registrationForm import RegistrationForm
 from flask_bcrypt import Bcrypt
@@ -64,6 +64,11 @@ def logout():
         session.pop("user",None)
         return redirect(url_for("mainPage",login = getUserFromSession()))
     return redirect(url_for("mainPage",login = getUserFromSession()))
+
+@app.route('/kurzy')
+def kurzy():
+    courses = Courses()
+    return render_template('allCourses.html',courses = courses.fetchAll())
 
 @app.route("/registration", methods=['GET', 'POST'])
 def registration():

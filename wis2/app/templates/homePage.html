@@ -2,7 +2,7 @@
 <html>
     <div>
         <a href = "{{url_for('login')}}">Login</a>
-        <a href = "{{url_for('mainPage')}}">Kurzy</a>
+        <a href = "{{url_for('kurzy')}}">Kurzy</a>
         <a href = "{{url_for('logout')}}">Logout</a>
         {% block content %}
         {% if login == "admin" %}
@@ -15,10 +15,9 @@
     <h1>{% block title %} Books {% endblock %}</h1>
     {% for user in users %}
         <div class='user'>
-            <h3>#{{ user[0] }} - {{ user[1] }} BY {{ user[2] }}</h3>
+            <h3>#{{ user[0] }} - {{ user[1] }}</h3>
             <i><p>({{ user[2] }} name)</p></i>
             <p class='adress'>{{ user[3] }}</p>
-            <i><p>enrollment_date {{ user[4] }}</p></i>
         </div>
     {% endfor %}
 {% endblock %}
