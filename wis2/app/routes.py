@@ -1,10 +1,16 @@
-from flask import render_template, request, redirect,url_for,flash
+from flask import render_template, request, redirect,url_for,flash,session
 from app import app
 from app.models import User
 from app.forms import LoginForm
+from app.registrationForm import RegistrationForm
 from flask_bcrypt import Bcrypt
 import psycopg2
 
+def getUserFromSession():
+    if "user" in session:
+        return session["user"]
+    else:
+        return ""
 
 def get_db_connection():
     conn = psycopg2.connect(
@@ -17,16 +23,22 @@ def get_db_connection():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    if form.validate_on_submit():
-        userModel = User()
-        user = userModel.validatePasswordAndSetUser(form.password.data,form.username.data)
-        if user == False:
-            form.username.errors.append("Zle zadané dáta")
-            return render_template('betterLogin.html',form=form)
+    if "user" not in session:
+        if form.validate_on_submit():
+            userModel = User()
+            user = userModel.validatePasswordAndSetUser(form.password.data,form.username.data)
+            if user == False:
+                form.username.errors.append("Zle zadané dáta")
+                return render_template('betterLogin.html',form=form)
+            else:
+                if form.remember_me.data == True:
+                    session.permanent = True
+                session["user"] = user
+                return render_template('home.html',login = session["user"])
         else:
-            return render_template('home.html')
+            return render_template('betterLogin.html',form=form)
     else:
-        return render_template('betterLogin.html',form=form)
+        return redirect(url_for("homePage",login = getUserFromSession()))
 
 @app.route('/', methods=['GET','POST'])
 def mainPage():
@@ -37,5 +49,35 @@ def mainPage():
     users = cur.fetchall()
     conn.close()
     conn.close()
-    print('''<h1>{{users}}</h1>''')
-    return render_template('homePage.html',users=users)
+    return render_template('homePage.html',users=users , login=getUserFromSession())
+
+@app.route('/home')
+def homePage():
+    if "user" in session:
+        return render_template('home.html',login = getUserFromSession())
+    else:
+        return redirect(url_for("login"))
+
+@app.route('/logout')
+def logout():
+    if "user" in session:
+        session.pop("user",None)
+        return redirect(url_for("mainPage",login = getUserFromSession()))
+    return redirect(url_for("mainPage",login = getUserFromSession()))
+
+@app.route("/registration", methods=['GET', 'POST'])
+def registration():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        userModel = User()
+        set = userModel.registerUser(form.password.data,form.username.data,form.name.data,form.address.data,form.s_date.data)
+        if set == False:
+            form.username.errors.append("Meno je pouzivane!")
+            return render_template('registration.html',form=form)
+        else:
+            session["user"] = form.username.data
+            return render_template('home.html',login = session["user"])
+    else:
+        return render_template('registration.html',form=form)
+    
+

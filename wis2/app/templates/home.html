@@ -1,0 +1,15 @@
+<html>
+    <div>
+        <a href = "{{url_for('login')}}">Login</a>
+        <a href = "{{url_for('mainPage')}}">Kurzy</a>
+        <a href = "{{url_for('logout')}}">Logout</a>
+        {% block content %}
+        {% if login == "admin" %}
+        <a href= "{{url_for('mainPage')}}">Správa Servera</a>
+        {% else %}
+        <p>nejsi Admin smolka</p>
+        {% endif %}
+        {% endblock content %}
+    </div>
+    <h1>Uspešne prihlásený</h1>
+</html>
