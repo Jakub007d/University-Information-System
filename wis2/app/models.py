@@ -39,6 +39,16 @@ class User:
         else:
             return False
     
+    def updatePassword(self,name,password):
+        bcript = Bcrypt()
+        conn = get_db_connection()
+        cur = conn.cursor()
+        password_hash = bcript.generate_password_hash(password)
+        if password != '':
+            cur.execute('UPDATE users SET password=\''+password_hash+'\' WHERE name=\''+name+'\';')
+        else:
+            return False
+    
     def registerUser(self,password,username,name,addres,s_date):
         if dropTableDetection(password) or dropTableDetection(username) or dropTableDetection(name) or dropTableDetection(addres) or dropTableDetection(s_date):
             return False
