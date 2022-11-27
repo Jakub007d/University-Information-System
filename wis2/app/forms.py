@@ -42,3 +42,9 @@ class myProfile(FlaskForm):
     password = PasswordField('Heslo')
     enrollment_date = StringField('Dátum')
     submit = SubmitField('Ulož')
+
+class userSelecter(FlaskForm):
+    users = User()
+    names = users.fetchAllUsersLogins()
+    userSelector = SelectField('Uživatelia',choices=names)
+    submit = SubmitField('Ukáž')

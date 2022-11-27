@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect,url_for,flash,session
 from app import app
 from app.models import User ,Courses
-from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm,myProfile
+from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm,myProfile,userSelecter
 from app.registrationForm import RegistrationForm
 from flask_bcrypt import Bcrypt
 import psycopg2
@@ -67,6 +67,47 @@ def kurzy():
     courses = Courses()
     return render_template('allCourses.html',courses = courses.fetchAll())
 
+@app.route('/manage_users', methods=['GET', 'POST'])
+def manageUsers():
+    form = userSelecter()
+    usersModel = User()
+    form.userSelector.choices = usersModel.fetchAllUsersLogins()
+    if form.validate_on_submit():
+        pass
+        data = usersModel.fetchAll(form.userSelector.data)
+    if form.validate_on_submit():
+        session["updated_user"] =form.userSelector.data
+        return redirect(url_for('manageUser'))
+    return render_template('manage_users.html',form=form)
+
+@app.route('/manage_user', methods=['GET', 'POST'])
+def manageUser():
+    form1 = myProfile()
+    userModel = User()
+    updated_user = " "
+    if "updated_user" in session:
+        updated_user = session["updated_user"]
+    data = userModel.fetchAll(updated_user)
+    if form1.validate_on_submit and form1.name.data != None:
+        name = form1.name.data
+        print(name)
+        adress = form1.adress.data
+        password = form1.password.data
+        enrollment_date = form1.enrollment_date.data
+        if name != "":
+            userModel.updateName(updated_user,name)
+        if name != "":
+            userModel.updateAdress(updated_user,adress)
+        if password != "":
+            userModel.updatePassword(updated_user,password)
+        if name != "":
+            userModel.updateEnrollment(updated_user,enrollment_date)
+        return redirect(url_for("mainPage",login = getUserFromSession()))
+    form1.name.data = data[0][1]
+    form1.adress.data = data[0][2]
+    form1.enrollment_date.data = data[0][3]
+    return render_template('myProfile.html',form=form1, login = updated_user)
+    
 
 
 @app.route("/registration", methods=['GET', 'POST'])

@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Wis 2</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    </head>
+
+    <div>
+        <ul>
+        <li><a href = "{{url_for('kurzy')}}">Kurzy</a></li>
+        <li><a href = "{{url_for('mainPage')}}">Home</a></li>
+        <li><a href = "{{url_for('logout')}}">Učené Kurzy</a></li>
+        {% block content %}
+        {% if login == "admin" %}
+        <li><a href= "{{url_for('spravaServeru')}}">Správa Servera</a></li>
+        {% endif %}
+        {% if login != "" %}
+        <li><a href = "{{url_for('mojProfil')}}">Môj Profil</a></li>
+        <li><a href= "{{url_for('addCourse')}}">Pridanie kurzu</a></li>
+        <li><a href = "{{url_for('logout')}}">Logout</a></li>
+        {%else%}
+        <li><a href = "{{url_for('login')}}">Login</a></li>
+        {% endif %}
+    </ul>
+    </div>    
+
+    <div>
+            <button><a href = "{{url_for('mainPage')}}">Back</a></button>
+        </div>
+        <h1>Správa uživatela</h1>
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.userSelector.label}}
+                {{ form.userSelector}}
+            </p>
+            <p>
+                {{ form.submit() }}
+            </p>
+        <button><a href = "{{url_for('login')}}">Správa Uživateľov</a></button><br>
+        <button><a href = "{{url_for('login')}}">Správa Kurzov</a></button><br>
+        <button><a href = "{{url_for('login')}}">Zadávanie Miestností</a></button>
+    {% endblock %}
+</html>

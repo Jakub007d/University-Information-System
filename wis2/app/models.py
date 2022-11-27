@@ -63,6 +63,12 @@ class User:
         cur.close()
         conn.close()
     
+    def fetchAllUsersLogins(self):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT login,login FROM users ;')
+        return cur.fetchall()
+    
     def updatePassword(self,name,password):
         bcript = Bcrypt()
         conn = get_db_connection()
