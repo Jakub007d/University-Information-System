@@ -1,35 +1,61 @@
-{% block content %}
+<!doctype html>
+<html>
+    <head>
+        <title>Wis 2</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    </head>
+
     <div>
-        <a href = "{{url_for('mainPage')}}">Back</a>
-    </div>
-    <h1>Registrace</h1>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.courses}}
-        </p>
-        <p>
-            {{ form.submit() }}
-        </p>
-    </form>
-    {% if course != '' %}
-    {% for cour in course %}
-    <div class='user'>
-        <h3>Názov kurzu: {{ cour[0] }}</h3>
-        <h4>Garant kurzu: {{ cour[1] }}</h4>
-        <i><p>Popis kurzu: <br>({{ cour[2] }})</p></i>
-        <p>Schválený: {{ cour[3] }}</p>
-    </div>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form2.accepted() }}
-        </p>
-        <p>
-            {{ form2.course }}
-            {{ form2.update() }}
-        </p>
-    </form>
-{% endfor %}
+        <ul>
+        <li><a href = "{{url_for('kurzy')}}">Kurzy</a></li>
+        <li><a href = "{{url_for('mainPage')}}">Home</a></li>
+        <li><a href = "{{url_for('logout')}}">Učené Kurzy</a></li>
+        {% block content %}
+        {% if login == "admin" %}
+        <li><a href= "{{url_for('spravaServeru')}}">Správa Servera</a></li>
         {% endif %}
-{% endblock %}
+        {% if login != "" %}
+        <li><a href = "{{url_for('mojProfil')}}">Môj Profil</a></li>
+        <li><a href= "{{url_for('addCourse')}}">Pridanie kurzu</a></li>
+        <li><a href = "{{url_for('logout')}}">Logout</a></li>
+        {%else%}
+        <li><a href = "{{url_for('login')}}">Login</a></li>
+        {% endif %}
+    </ul>
+    </div>    
+
+    <div>
+            <button><a href = "{{url_for('mainPage')}}">Back</a></button>
+        </div>
+        <h1>Registrace</h1>
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.courses}}
+            </p>
+            <p>
+                {{ form.submit() }}
+            </p>
+        </form>
+        {% if course != '' %}
+        {% for cour in course %}
+        <div class='user'>
+            <h3>Názov kurzu: {{ cour[0] }}</h3>
+            <h4>Garant kurzu: {{ cour[1] }}</h4>
+            <i><p>Popis kurzu: <br>({{ cour[2] }})</p></i>
+            <p>Schválený: {{ cour[3] }}</p>
+        </div>
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form2.accepted() }}
+            </p>
+            <p>
+                {{ form2.course }}
+                {{ form2.update() }}
+            </p>
+        </form>
+    {% endfor %}
+            {% endif %}
+    {% endblock %}
+</html>

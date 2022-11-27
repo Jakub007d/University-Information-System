@@ -38,6 +38,30 @@ class User:
                 return False
         else:
             return False
+
+    def updateName(self,login,name):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('UPDATE users SET name=\''+name+'\' WHERE login=\''+name+'\';')
+        conn.commit()
+        cur.close()
+        conn.close()
+
+    def updateAdress(self,login,adress):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('UPDATE users SET name=\''+adress+'\' WHERE login=\''+adress+'\';')
+        conn.commit()
+        cur.close()
+        conn.close()
+
+    def updateEnrollment(self,login,enrollment_date):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('UPDATE users SET name=\''+enrollment_date+'\' WHERE login=\''+enrollment_date+'\';')
+        conn.commit()
+        cur.close()
+        conn.close()
     
     def updatePassword(self,name,password):
         bcript = Bcrypt()
@@ -45,10 +69,23 @@ class User:
         cur = conn.cursor()
         password_hash = bcript.generate_password_hash(password)
         if password != '':
-            cur.execute('UPDATE users SET password=\''+password_hash+'\' WHERE name=\''+name+'\';')
+            cur.execute('UPDATE users SET password=\''+password_hash+'\' WHERE login=\''+name+'\';')
+            conn.commit()
+            cur.close()
+            conn.close()
         else:
+            conn.commit()
+            cur.close()
+            conn.close()
             return False
     
+    def fetchAll(self, login):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM users WHERE login=\''+login+'\';')
+        data = cur.fetchall()
+        return data
+
     def registerUser(self,password,username,name,addres,s_date):
         if dropTableDetection(password) or dropTableDetection(username) or dropTableDetection(name) or dropTableDetection(addres) or dropTableDetection(s_date):
             return False
@@ -153,6 +190,3 @@ class Courses :
             cur.close()
             conn.close()
             return False
-
-
-

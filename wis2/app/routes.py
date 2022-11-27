@@ -102,9 +102,28 @@ def spravaServeru():
         return render_template('sprava_serveru.html',form=form,course='',form2=form2)
     return render_template('sprava_serveru.html',form=form,course='',form2=form2)
 
-@app.route("/my_profile")
+@app.route("/my_profile", methods=['GET', 'POST'])
 def mojProfil():
     form = myProfile()
+    userModel = User()
+    data = userModel.fetchAll(getUserFromSession())
+    if form.validate_on_submit():
+        name = form.name.data
+        adress = form.adress.data
+        password = form.password.data
+        enrollment_date = form.enrollment_date.data
+        if name != "":
+            userModel.updateName(getUserFromSession,name)
+        if name != "":
+            userModel.updateAdress(getUserFromSession(),adress)
+        if password != "":
+            userModel.updatePassword(getUserFromSession(),password)
+        if name != "":
+            userModel.updateEnrollment(getUserFromSession(),enrollment_date)
+        return render_template('homePage.html', login=getUserFromSession)
+    form.name.data = data[0][1]
+    form.adress.data = data[0][2]
+    form.enrollment_date.data = data[0][3]
     return render_template('myProfile.html',form=form)
 
 
@@ -121,4 +140,3 @@ def addCourse():
             return render_template('home.html',login = session["user"])
     else:
         return render_template('add_course.html',form=form)
-
