@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect,url_for,flash,session
 from app import app
 from app.models import User ,Courses
-from app.forms import LoginForm
+from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm
 from app.registrationForm import RegistrationForm
 from flask_bcrypt import Bcrypt
 import psycopg2
@@ -42,14 +42,9 @@ def login():
 
 @app.route('/', methods=['GET','POST'])
 def mainPage():
-    bcript = Bcrypt()
-    conn = get_db_connection()
-    cur = conn.cursor()
-    cur.execute('SELECT * FROM users;')
-    users = cur.fetchall()
-    conn.close()
-    conn.close()
-    return render_template('homePage.html',users=users , login=getUserFromSession())
+    coursesModel = Courses()
+    courses = coursesModel.fetchAll()
+    return render_template('homePage.html',courses=courses , login=getUserFromSession())
 
 @app.route('/home')
 def homePage():
@@ -65,10 +60,14 @@ def logout():
         return redirect(url_for("mainPage",login = getUserFromSession()))
     return redirect(url_for("mainPage",login = getUserFromSession()))
 
+
+
 @app.route('/kurzy')
 def kurzy():
     courses = Courses()
     return render_template('allCourses.html',courses = courses.fetchAll())
+
+
 
 @app.route("/registration", methods=['GET', 'POST'])
 def registration():
@@ -84,5 +83,44 @@ def registration():
             return render_template('home.html',login = session["user"])
     else:
         return render_template('registration.html',form=form)
-    
+
+
+
+@app.route("/správa_serveru", methods=['GET', 'POST'])
+def spravaServeru():
+    form = manageCourse()
+    form2 = setAcceptedCourse()
+    courseModel = Courses()
+    form.courses.choices = courseModel.fetchCoursesNames()
+    if form.validate_on_submit():
+        courses = courseModel.getCourseByName(form.courses.data)
+        form2.accepted.data=courseModel.getCourseState(form.courses.data)
+        session["course"] = form.courses.data
+        return render_template('sprava_serveru.html',form=form,course=courses,form2=form2)
+    if form2.validate_on_submit():
+        courseModel.setCourseState(form2.accepted.data,session["course"])
+        return render_template('sprava_serveru.html',form=form,course='',form2=form2)
+    return render_template('sprava_serveru.html',form=form,course='',form2=form2)
+
+@app.route("/moj_profil")
+def mojProfil():
+    user = UserEditForm()
+    if user.validate_on_submit():
+        pass
+#TODO
+
+
+@app.route("/add_course", methods=['GET', 'POST'])
+def addCourse():
+    form = addCourseForm()
+    if form.validate_on_submit():
+        courseModel = Courses()
+        set = courseModel.addCourse(getUserFromSession(),form.name.data,form.description.data,form.type.data)
+        if set == False:
+            form.name.errors.append("Meno je pouzivane!")
+            return render_template('add_course.html',form=form)
+        else:
+            return render_template('home.html',login = session["user"])
+    else:
+        return render_template('add_course.html',form=form)
 

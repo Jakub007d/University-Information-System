@@ -1,25 +1,47 @@
 <!doctype html>
 <html>
+    <head>
+        <title>Wis 2</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+      </head>
     <div>
-        <a href = "{{url_for('login')}}">Login</a>
-        <a href = "{{url_for('kurzy')}}">Kurzy</a>
-        <a href = "{{url_for('logout')}}">Logout</a>
+        <ul>
+        <li><a href = "{{url_for('kurzy')}}">Kurzy</a></li>
+        <li><a href = "{{url_for('mainPage')}}">Home</a></li>
+        <li><a href = "{{url_for('logout')}}">Učené Kurzy</a></li>
         {% block content %}
         {% if login == "admin" %}
-        <a href= "{{url_for('mainPage')}}">Správa Servera</a>
-        {% elif login == "" %}
-        <a href= "{{url_for('registration')}}">Registrace</a>
+        <li><a href= "{{url_for('spravaServeru')}}">Správa Servera</a></li>
         {% endif %}
-    </div>
+        {% if login != "" %}
+        <li><a href = "{{url_for('mojProfil')}}">Môj Profil</a></li>
+        <li><a href= "{{url_for('addCourse')}}">Pridanie kurzu</a></li>
+        <li><a href = "{{url_for('logout')}}">Logout</a></li>
+        {%else%}
+        <li><a href = "{{url_for('login')}}">Login</a></li>
+    
+        {% endif %}
+    </ul>
     <h1>Vytaj na najlešej a najsofistikovanejšej Houm Páži</h1>
-    <h1>{% block title %} Books {% endblock %}</h1>
-    {% for user in users %}
-        <div class='user'>
-            <h3>#{{ user[0] }} - {{ user[1] }}</h3>
-            <i><p>({{ user[2] }} name)</p></i>
-            <p class='adress'>{{ user[3] }}</p>
-        </div>
+    <h1>{% block title %} Kurzy: {% endblock %}</h1>
+    <table>
+        <tr>
+        <th>Meno</th>
+        <th>Garant</th>
+        <th>Typ</th>
+        <th>Popis</th>
+        </tr>
+    {% for course in courses %}
+        {% if course[4] == True %}
+        <tr>
+            <th>{{course[0]}}</th>
+            <th>{{course[1]}}</th>
+            <th>{{course[2]}}</th>
+            <th>{{course[3]}}</th>
+        </tr>
+        {% endif %}
     {% endfor %}
+    </table>
 {% endblock %}
     <a href = "{{url_for('login')}}">Login</a>
 </html>

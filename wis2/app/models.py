@@ -71,17 +71,78 @@ class Courses :
     def fetchAll(self):
         conn = get_db_connection()
         cur = conn.cursor()
-        cur.execute('SELECT * FROM corses ;')
+        cur.execute('SELECT * FROM courses ;')
         courses = cur.fetchall()
         return courses
 
     def fetchByUsername(self,username):
         conn = get_db_connection()
         cur = conn.cursor()
-        cur.execute('SELECT * FROM corses WHERE login=\''+username+'\';')
+        cur.execute('SELECT * FROM courses WHERE login=\''+username+'\';')
         courses = cur.fetchall()
         return courses
 
+    def fetchCousesTypes(self):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM course_type ;')
+        courses = cur.fetchall()
+        return courses
+
+    def fetchCoursesNames(self):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT name,name FROM courses ;')
+        courses = cur.fetchall()
+        return courses
+    
+    def getCourseByName(self,name):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT name,login,description,accepted,price FROM courses where name=\''+name+'\';')
+        courses = cur.fetchall()
+        return courses
+    
+    def getCourseState(self,name):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT accepted FROM courses where name=\''+name+'\';')
+        state = cur.fetchall()
+        return state[0][0]
+
+    def setCourseState(self,state,name):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        if state:
+            cur.execute('UPDATE courses SET accepted=TRUE WHERE name=\''+name+'\';')
+        else:
+            cur.execute('UPDATE courses SET accepted=FALSE WHERE name=\''+name+'\';')
+        conn.commit()
+        cur.close()
+        conn.close()
+
+
+    def addCourse(self,login,name,description,type):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT name FROM courses WHERE name=\''+name+'\';')
+        if cur.rowcount == 0:
+            cur.execute('INSERT INTO courses (name, login, type, description, accepted, price)'
+                'VALUES (%s, %s, %s,%s,%s,%s)',
+                (name,
+                login,
+                type,
+                description,
+                'FALSE',
+                'Zadarmo'
+                )
+            )
+            conn.commit()
+            return True
+        else:
+            cur.close()
+            conn.close()
+            return False
 
 
 

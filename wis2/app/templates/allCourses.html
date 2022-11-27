@@ -8,10 +8,12 @@
     {% block content %}
     <h1>{% block title %} Kurzy {% endblock %}</h1>
     {% for course in courses %}
-        <div class='course'>
-            <h3>#{{ course[0] }} - {{ course[2] }} vyučuje: {{ course[1] }}</h3>
-            <h4 class='popis'>Popis: {{ course[3] }}</h4>
-        </div>
+        {%if course[4] == True %}
+            <div class='course'>
+                <h3>#{{ course[0] }} vyučuje: {{ course[1] }}</h3>
+                <h4 class='popis'>Popis: {{ course[3] }}</h4>
+            </div>
+        {%endif%}
     {% endfor %}
 {% endblock %}
 </html>
