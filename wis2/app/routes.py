@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect,url_for,flash,session
 from app import app
 from app.models import User ,Courses
-from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm
+from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm,myProfile
 from app.registrationForm import RegistrationForm
 from flask_bcrypt import Bcrypt
 import psycopg2
@@ -102,12 +102,10 @@ def spravaServeru():
         return render_template('sprava_serveru.html',form=form,course='',form2=form2)
     return render_template('sprava_serveru.html',form=form,course='',form2=form2)
 
-@app.route("/moj_profil")
+@app.route("/my_profile")
 def mojProfil():
-    user = UserEditForm()
-    if user.validate_on_submit():
-        pass
-#TODO
+    form = myProfile()
+    return render_template('myProfile.html',form=form)
 
 
 @app.route("/add_course", methods=['GET', 'POST'])

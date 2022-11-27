@@ -35,3 +35,10 @@ class setAcceptedCourse(FlaskForm):
     course = ''
     accepted = BooleanField('Schválené')
     update = SubmitField('Uložiť')
+
+class myProfile(FlaskForm):
+    name = StringField('Meno')
+    adress = StringField('Adresa')
+    password = PasswordField('Heslo')
+    enrollment_date = StringField('Dátum')
+    submit = SubmitField('Ulož')

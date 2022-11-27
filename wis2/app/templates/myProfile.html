@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+    <div>
+        <a href = "{{url_for('mainPage')}}">Back</a>
+    </div>
+    {% block content %}
+    <h1>Môj profil</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(size=32) }}
+        </p>
+        <p>
+            {{ form.adress.label }}<br>
+            {{ form.adress(size=32) }}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}
+        </p>
+        <p>
+            {{ form.enrollment_date.label }}<br>
+            {{ form.enrollment_date(size=32) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
+</html>
