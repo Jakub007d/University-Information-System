@@ -5,7 +5,8 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
       </head>
     <div>
-        <ul>
+        <ul class="nav">
+        <li><a href = "https://www.fit.vut.cz/.cs"><img class="FITlogo" src="https://pbs.twimg.com/profile_images/658660856683610113/JLVEZWf9_400x400.png" alt="FIT"></a></li>
         <li><a href = "{{url_for('kurzy')}}">Kurzy</a></li>
         <li><a href = "{{url_for('mainPage')}}">Home</a></li>
         <li><a href = "{{url_for('logout')}}">Učené Kurzy</a></li>
@@ -19,7 +20,6 @@
         <li><a href = "{{url_for('logout')}}">Logout</a></li>
         {%else%}
         <li><a href = "{{url_for('login')}}">Login</a></li>
-    
         {% endif %}
     </ul>
     <h1>Vytaj na najlešej a najsofistikovanejšej Houm Páži</h1>

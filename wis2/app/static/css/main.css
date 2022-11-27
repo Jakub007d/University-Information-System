@@ -1,3 +1,7 @@
+.nav {
+  margin: -10px;
+}
+
 ul {
   list-style-type: none;
   margin: 0;
@@ -9,13 +13,23 @@ ul {
 li {
   float: left;
 }
-  
+
 li a {
   display: block;
   color: white;
   text-align: center;
-  padding: 14px 16px;
+  padding: 14px 18px;
   text-decoration: none;
+  border-right: 1px solid;
+}
+
+img {
+  width: 48px;
+  margin: -18px;
+}
+
+a {
+  color: black;
 }
 
 p {
@@ -34,6 +48,17 @@ li a:hover {
 
 button {
   margin-top: 4px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+button:hover, input:hover[type=button], input:hover[type=submit], input:hover[type=reset] {
+  border-color: rgb(0, 135, 198);
 }
 
 a {
