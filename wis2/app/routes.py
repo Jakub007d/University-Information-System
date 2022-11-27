@@ -113,14 +113,14 @@ def mojProfil():
         password = form.password.data
         enrollment_date = form.enrollment_date.data
         if name != "":
-            userModel.updateName(getUserFromSession,name)
+            userModel.updateName(getUserFromSession(),name)
         if name != "":
             userModel.updateAdress(getUserFromSession(),adress)
         if password != "":
             userModel.updatePassword(getUserFromSession(),password)
         if name != "":
             userModel.updateEnrollment(getUserFromSession(),enrollment_date)
-        return render_template('homePage.html', login=getUserFromSession)
+        return redirect(url_for("mainPage",login = getUserFromSession()))
     form.name.data = data[0][1]
     form.adress.data = data[0][2]
     form.enrollment_date.data = data[0][3]

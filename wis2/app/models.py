@@ -42,7 +42,7 @@ class User:
     def updateName(self,login,name):
         conn = get_db_connection()
         cur = conn.cursor()
-        cur.execute('UPDATE users SET name=\''+name+'\' WHERE login=\''+name+'\';')
+        cur.execute('UPDATE users SET name=\''+name+'\' WHERE login=\''+login+'\';')
         conn.commit()
         cur.close()
         conn.close()
@@ -50,7 +50,7 @@ class User:
     def updateAdress(self,login,adress):
         conn = get_db_connection()
         cur = conn.cursor()
-        cur.execute('UPDATE users SET name=\''+adress+'\' WHERE login=\''+adress+'\';')
+        cur.execute('UPDATE users SET adress=\''+adress+'\' WHERE login=\''+login+'\';')
         conn.commit()
         cur.close()
         conn.close()
@@ -58,7 +58,7 @@ class User:
     def updateEnrollment(self,login,enrollment_date):
         conn = get_db_connection()
         cur = conn.cursor()
-        cur.execute('UPDATE users SET name=\''+enrollment_date+'\' WHERE login=\''+enrollment_date+'\';')
+        cur.execute('UPDATE users SET enrollment_date=\''+enrollment_date+'\' WHERE login=\''+login+'\';')
         conn.commit()
         cur.close()
         conn.close()
@@ -69,7 +69,7 @@ class User:
         cur = conn.cursor()
         password_hash = bcript.generate_password_hash(password)
         if password != '':
-            cur.execute('UPDATE users SET password=\''+password_hash+'\' WHERE login=\''+name+'\';')
+            cur.execute('UPDATE users SET password=\''+password_hash.decode('utf8')+'\' WHERE login=\''+name+'\';')
             conn.commit()
             cur.close()
             conn.close()
