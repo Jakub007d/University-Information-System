@@ -3,10 +3,10 @@
     <head>
         <title>Wis 2</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    </head>
-
+      </head>
     <div>
-        <ul>
+        <ul class="nav">
+        <li><a href = "https://www.fit.vut.cz/.cs"><img class="FITlogo" src="https://pbs.twimg.com/profile_images/658660856683610113/JLVEZWf9_400x400.png" alt="FIT"></a></li>
         <li><a href = "{{url_for('kurzy')}}">Kurzy</a></li>
         <li><a href = "{{url_for('mainPage')}}">Home</a></li>
         <li><a href = "{{url_for('logout')}}">Učené Kurzy</a></li>
@@ -57,7 +57,7 @@
         </form>
     {% endfor %}
             {% endif %}
-        <button><a href = "{{url_for('login')}}">Správa Uživateľov</a></button><br>
+        <button><a href = "{{url_for('manageUsers')}}">Správa Uživateľov</a></button><br>
         <button><a href = "{{url_for('login')}}">Správa Kurzov</a></button><br>
         <button><a href = "{{url_for('login')}}">Zadávanie Miestností</a></button>
     {% endblock %}
