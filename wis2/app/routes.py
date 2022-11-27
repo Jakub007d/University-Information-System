@@ -124,7 +124,7 @@ def mojProfil():
     form.name.data = data[0][1]
     form.adress.data = data[0][2]
     form.enrollment_date.data = data[0][3]
-    return render_template('myProfile.html',form=form)
+    return render_template('myProfile.html',form=form, login = getUserFromSession())
 
 
 @app.route("/add_course", methods=['GET', 'POST'])
