@@ -17,20 +17,39 @@
         <li><a href = "{{url_for('garantedCourses')}}">Garantované Kurzy</a></li>
         <li><a href = "{{url_for('logout')}}">Učené Kurzy</a></li>
         <li><a href = "{{url_for('mojProfil')}}">Môj Profil</a></li>
-        <li><a href= "{{url_for('addCourse')}}">Pridanie kurzu</a></li>
+        <li><a href= "{{url_for('addCourse')}}">Pridanie Kurzu</a></li>
         <li><a href = "{{url_for('logout')}}">Logout</a></li>
         {%else%}
         <li><a href = "{{url_for('login')}}">Login</a></li>
         {% endif %}
     </ul>
     </div>
-        
-    <div>
-    <form action="" method="post" novalidate>
-        {{ form.courses.label }}
-        {{ form.courses }}
-        {{ form.submit()}}
-    </form>
-    </div>
+
+    <h1> {{ course }} </h1>
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.type.label}}
+                {{ form.type}}
+            </p>
+            <p>
+                {{ form.room.label}}
+                {{ form.room}}
+            </p>
+            <p>
+                {{ form.name.label}}
+                {{ form.name}}
+            </p>
+            <p>
+                {{ form.description.label}}
+                {{ form.description}}
+            </p>
+            <p>
+                {{ form.date.label}}
+                {{ form.date}}
+            </p>
+            <p>
+                {{ form.submit() }}
+            </p>
     {% endblock %}
 </html>
