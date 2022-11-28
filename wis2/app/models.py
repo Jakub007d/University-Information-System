@@ -127,6 +127,27 @@ class Courses :
         cur.execute('SELECT * FROM courses ;')
         courses = cur.fetchall()
         return courses
+    
+    def fetchAllGarantedCourses(self,login):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM courses WHERE login=\''+login+'\';')
+        courses = cur.fetchall()
+        return courses
+
+    def fetchStudentsFromCourse(self,id_course):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT id_users,id_users FROM students WHERE id_course=\''+id_course+'\' and accepted=\'False\';')
+        return cur.fetchall()
+
+    def updateStudentStatus(self,id_student,id_course):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('UPDATE students SET accepted=TRUE WHERE id_course=\''+id_course+'\' and id_users=\''+id_student+'\';')
+        conn.commit()
+        cur.close()
+        conn.close()
 
     def fetchByUsername(self,username):
         conn = get_db_connection()
@@ -247,6 +268,24 @@ class Courses :
         return data
 
 
+    def addLectorsToCourse(self,id_users,id_course):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('INSERT INTO lectors (id_course, id_users)'
+                'VALUES (%s, %s)',
+                (id_course, id_users)
+            )
+        conn.commit()
+        cur.close()
+        conn.close()
+    
+    def fetchLectorsByCourse(self,id_course):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT id_users FROM lectors WHERE id_course=\''+id_course+'\';')
+        return cur.fetchall()
+
+
 
     def addCourse(self,login,name,description,type):
         conn = get_db_connection()
@@ -261,6 +300,12 @@ class Courses :
                 description,
                 'FALSE',
                 'Zadarmo'
+                )
+            )
+            cur.execute('INSERT INTO lectors (id_course, id_users)'
+                'VALUES (%s, %s)',
+                (name,
+                login,
                 )
             )
             conn.commit()

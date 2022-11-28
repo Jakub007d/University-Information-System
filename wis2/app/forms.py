@@ -64,3 +64,10 @@ class newTermin(FlaskForm):
 class submit(FlaskForm):
     submit= SubmitField("Zapísať Kurz")
 
+class students(FlaskForm):
+    students = SelectField('Neschválený študenti')
+    submit = SubmitField('Schváliť registráciu')
+
+class addLectors(FlaskForm):
+    userSelector = SelectField('Uživatelia')
+    submit = SubmitField('Pridať lektora')
