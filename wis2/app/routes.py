@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect,url_for,flash,session
 from app import app
 from app.models import User ,Courses
-from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm,myProfile,userSelecter,garantedCoursesForm,newTermin, submit
+from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm,myProfile,userSelecter,garantedCoursesForm,newTermin, submit , students, addLectors
 from app.registrationForm import RegistrationForm
 from flask_bcrypt import Bcrypt
 import psycopg2
@@ -42,9 +42,29 @@ def login():
 @app.route('/garanted_courses',methods=['GET', 'POST'])
 def garantedCourses():
     courseModel = Courses()
-    courses = courseModel.fetchAll()
-    print(courseModel.getCoursesByGarant(getUserFromSession()))
+    courses = courseModel.fetchAllGarantedCourses(getUserFromSession())
     return render_template('garanted_courses.html',courses=courses)
+
+@app.route('/add_lector',methods=['GET', 'POST'])
+def addLector():
+    courseModel=Courses()
+    usersModel = User()
+    form = addLectors()
+    data = request.form
+    data = data.getlist('course')
+    try:
+        data = data[0]
+        session["kurz"] = data
+    except:
+        data = session["kurz"]
+    form.userSelector.choices = usersModel.fetchAllUsersLogins()
+    if form.validate_on_submit():
+        courseModel.addLectorsToCourse(form.userSelector.data,data)
+        return redirect(url_for("addLector"))
+    lectors = courseModel.fetchLectorsByCourse(data)
+    return render_template('course_lectors.html',form=form,login=getUserFromSession(),lectors=lectors)
+    
+
 
 @app.route('/course_editing')
 def courseEditing():
@@ -105,6 +125,25 @@ def addTermin():
         coursesModel.addTerminToCourse(form.type.data,form.room.data,form.name.data,form.description.data,form.date.data,course_id)
         return redirect(url_for("homePage"))
     return render_template("termin_add.html",form=form,course=course_id)
+
+
+@app.route('/accept_student',methods=['GET','POST'])
+def acceptStudent():
+    data = request.form
+    data = data.getlist('course')
+    try:
+        data = data[0]
+        session["kurz"] = data
+    except:
+        data = session["kurz"]
+    form = students()
+    courseModel = Courses()
+    form.students.choices = courseModel.fetchStudentsFromCourse(data)
+    if form.validate_on_submit():
+        courseModel.updateStudentStatus(form.students.data,data)
+        return redirect(url_for("acceptStudent"))
+    return render_template('accept_students.html',form=form,login=getUserFromSession())
+
     
 
 

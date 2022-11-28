@@ -32,6 +32,8 @@
         <th>Garant</th>
         <th>Typ</th>
         <th>Popis</th>
+        <th>Správa študentov</th>
+        <th>Prehľad lektorov<th>
         </tr>
     {% for course in courses %}
         {% if course[4] == True %}
@@ -48,6 +50,24 @@
             <th>{{course[1]}}</th>
             <th>{{course[2]}}</th>
             <th>{{course[3]}}</th>
+            <th>
+            <form action="{{url_for('acceptStudent')}}" method="POST">
+
+                <input type="hidden" name="course" value="{{course[0]}}" />
+                
+                <a href="#" onclick="this.parentNode.submit()">Studenti</a>
+                
+            </form>
+        </th>
+        <th>
+            <form action="{{url_for('addLector')}}" method="POST">
+
+                <input type="hidden" name="course" value="{{course[0]}}" />
+                
+                <a href="#" onclick="this.parentNode.submit()">Lektori</a>
+                
+            </form>
+        </th>
         </tr>
         {% endif %}
     {% endfor %}

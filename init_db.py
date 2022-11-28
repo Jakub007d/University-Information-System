@@ -146,6 +146,12 @@ cur.execute('INSERT INTO courses (name, login, type, description, accepted, pric
              'Zadarmo'
              )
             )
+cur.execute('INSERT INTO lectors (id_course, id_users)'
+            'VALUES (%s, %s)',
+            ('IAS',
+             'admin' # Another great classic!
+             )
+            )
 cur.execute('INSERT INTO courses (name, login, type, description, accepted, price)'
             'VALUES (%s, %s, %s, %s,%s,%s)',
             ('IIS',
@@ -154,6 +160,12 @@ cur.execute('INSERT INTO courses (name, login, type, description, accepted, pric
              'Tvorenie informacného systému',
              'TRUE',
              'Zadarmo'
+             )
+            )
+cur.execute('INSERT INTO lectors (id_course, id_users)'
+            'VALUES (%s, %s)',
+            ('IIS',
+             'xsanch00' # Another great classic!
              )
             )
 cur.execute('INSERT INTO room (name)'
