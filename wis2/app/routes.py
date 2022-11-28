@@ -103,8 +103,14 @@ def addStudent():
 def mainPage():
     coursesModel = Courses()
     courses = coursesModel.fetchAll()
+    coursesModel.fetchCoursesForStudent(getUserFromSession())
     return render_template('homePage.html',courses=courses , login=getUserFromSession())
-
+@app.route('/my_courses',methods=['GET','POST'])
+def myCourses():
+    courseModel = Courses()
+    courses = courseModel.fetchCoursesForStudent(getUserFromSession())
+    return render_template('my_courses.html',courses=courses)
+    
 @app.route('/add_termin', methods=['GET','POST'])
 def addTermin():
     form = newTermin()

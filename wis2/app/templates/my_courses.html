@@ -24,9 +24,33 @@
         <li><a href = "{{url_for('login')}}">Login</a></li>
         {% endif %}
     </ul>
-    </div>
+    <h1>{% block title %} Navštevované Kurzy: {% endblock %}</h1>
+    <table>
+        <tr>
+        <th>Meno</th>
+        <th>Garant</th>
+        <th>Typ</th>
+        <th>Popis</th>
+        </tr>
+    {%for cor in courses%}
+    {% for course in cor %}
+        <tr>
+            <th>
+                <form action="{{url_for('courseDetail')}}" method="POST">
 
-    <div>
-
-    </div>
+                    <input type="hidden" name="param1" value="{{course[0]}}" />
+                    
+                    <a href="#" onclick="this.parentNode.submit()">{{course[0]}}</a>
+                    
+                    </form>
+                </th>
+            <th>{{course[1]}}</th>
+            <th>{{course[2]}}</th>
+            <th>{{course[3]}}</th>
+        </tr>
+    {% endfor %}
+    {%endfor%}
+    </table>
+{% endblock %}
+    <button><a href = "{{url_for('login')}}">Login</a></button>
 </html>

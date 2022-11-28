@@ -285,6 +285,18 @@ class Courses :
         cur.execute('SELECT id_users FROM lectors WHERE id_course=\''+id_course+'\';')
         return cur.fetchall()
 
+    def fetchCoursesForStudent(self,login):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT id_course FROM students WHERE id_users=\''+login+'\' and accepted=\'TRUE\';')
+        courses_ids = cur.fetchall()
+        courses = []
+        for course in courses_ids:
+           cur.execute('SELECT * FROM courses WHERE name=\''+course[0]+'\';') 
+           courses.append(cur.fetchall())
+        print(courses)
+        return courses
+
 
 
     def addCourse(self,login,name,description,type):
