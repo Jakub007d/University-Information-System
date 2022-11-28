@@ -41,14 +41,10 @@ def login():
         return redirect(url_for("homePage",login = getUserFromSession()))
 @app.route('/garanted_courses',methods=['GET', 'POST'])
 def garantedCourses():
-    form = garantedCoursesForm()
     courseModel = Courses()
-    form.courses.choices = courseModel.getCoursesByGarant(getUserFromSession())
+    courses = courseModel.fetchAll()
     print(courseModel.getCoursesByGarant(getUserFromSession()))
-    if request.method == 'POST' and form.validate_on_submit:
-        session["kurz"] = form.courses.data
-        return redirect(url_for('courseEditing'))
-    return render_template('garanted_courses.html',form=form)
+    return render_template('garanted_courses.html',courses=courses)
 
 @app.route('/course_editing')
 def courseEditing():
@@ -88,12 +84,20 @@ def addTermin():
     coursesModel = Courses()
     course_id = request.form
     course_id = course_id.getlist('course')
-    course_id = course_id[0]
+    try:
+        course_id = course_id[0]
+        session["kurz"] = course_id
+    except:
+        if "kurz" in session:
+            course_id = session["kurz"]
+        else:
+            course_id=""
     form.type.choices = coursesModel.fetchTerminTypes()
-    #form.room.choices = coursesModel.fet
-    if form.validate_on_submit:
+    form.room.choices = coursesModel.fetchRooms()
+    if form.validate_on_submit and form.name.data != None:
         coursesModel.addTerminToCourse(form.type.data,form.room.data,form.name.data,form.description.data,form.date.data,course_id)
         return redirect(url_for("homePage"))
+    return render_template("termin_add.html",form=form,course=course_id)
     
 
 

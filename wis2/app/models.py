@@ -169,7 +169,7 @@ class Courses :
                 )
             )
         id_termin = cur.fetchall()
-        id_termin = id_termin[0]#TODO mozna chyba uvidi sa 
+        id_termin = id_termin[0][0]
         print(id_termin)
         cur.execute('INSERT INTO terminy (id_course, id_termin)'
                 'VALUES (%s, %s)',
