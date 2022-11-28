@@ -14,8 +14,9 @@
         <li><a href= "{{url_for('spravaServeru')}}">Správa Servera</a></li>
         {% endif %}
         {% if login != "" %}
-        <li><a href = "{{url_for('logout')}}">Garantované Kurzy</a></li>
+        <li><a href = "{{url_for('garantedCourses')}}">Garantované Kurzy</a></li>
         <li><a href = "{{url_for('logout')}}">Učené Kurzy</a></li>
+        <li><a href = "{{url_for('logout')}}">Navštevované Kurzy</a></li>
         <li><a href = "{{url_for('mojProfil')}}">Môj Profil</a></li>
         <li><a href= "{{url_for('addCourse')}}">Pridanie Kurzu</a></li>
         <li><a href = "{{url_for('logout')}}">Logout</a></li>
