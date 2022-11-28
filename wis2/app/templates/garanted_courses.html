@@ -24,13 +24,34 @@
         {% endif %}
     </ul>
     </div>
-        
+    <br>
     <div>
-    <form action="" method="post" novalidate>
-        {{ form.courses.label }}
-        {{ form.courses }}
-        {{ form.submit()}}
-    </form>
-    </div>
+    <table>
+        <tr>
+        <th>Meno</th>
+        <th>Garant</th>
+        <th>Typ</th>
+        <th>Popis</th>
+        </tr>
+    {% for course in courses %}
+        {% if course[4] == True %}
+        <tr>
+            <th>
+                <form action="{{url_for('addTermin')}}" method="POST">
+
+                    <input type="hidden" name="course" value="{{course[0]}}" />
+                    
+                    <a href="#" onclick="this.parentNode.submit()">{{course[0]}}</a>
+                    
+                    </form>
+                </th>
+            <th>{{course[1]}}</th>
+            <th>{{course[2]}}</th>
+            <th>{{course[3]}}</th>
+        </tr>
+        {% endif %}
+    {% endfor %}
+    </table>
     {% endblock %}
+    </div>
 </html>
