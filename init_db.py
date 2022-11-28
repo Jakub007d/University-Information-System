@@ -126,7 +126,15 @@ cur.execute('INSERT INTO course_type (name)'
 cur.execute('INSERT INTO course_type (name)'
             'VALUES(\'distančne\')'
             )
-
+cur.execute('INSERT INTO termin_type (name)'
+            'VALUES(\'Polsemestrálny Test\')'
+            )
+cur.execute('INSERT INTO termin_type (name)'
+            'VALUES(\'Zaverečná skúška\')'
+            )
+cur.execute('INSERT INTO termin_type (name)'
+            'VALUES(\'Projekt\')'
+            )
 cur.execute('INSERT INTO courses (name, login, type, description, accepted, price)'
             'VALUES (%s, %s, %s, %s,%s,%s)',
             ('IAS',
@@ -179,12 +187,33 @@ cur.execute('INSERT INTO termin (type, room, name, description, date)'
              '2022-12-12'
              )
             )
+cur.execute('INSERT INTO termin (type, room, name, description, date)'
+            'VALUES (%s, %s, %s, %s,%s)',
+            ('3',
+             '1', # Another great classic!
+             'Polsemestrálny test 2. skupina',
+             'Test z prvých 3 látok predmetu',
+             '2022-12-12'
+             )
+            )
 cur.execute('INSERT INTO lectors (id_course, id_users)'
             'VALUES (%s, %s)',
             ('IAS',
              'xsanch00' # Another great classic!
              )
             )
+cur.execute('INSERT INTO terminy (id_course, id_termin)'
+            'VALUES (%s, %s)',
+            ('IAS',
+             '1' # Another great classic!
+             )
+            )
+cur.execute('INSERT INTO terminy (id_course, id_termin)'
+            'VALUES (%s, %s)',
+            ('IAS',
+             '2' # Another great classic!
+             )
+            )              
 conn.commit()
 
 cur.close()

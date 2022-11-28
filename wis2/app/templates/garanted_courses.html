@@ -14,7 +14,7 @@
         <li><a href= "{{url_for('spravaServeru')}}">Správa Servera</a></li>
         {% endif %}
         {% if login != "" %}
-        <li><a href = "{{url_for('logout')}}">Garantované Kurzy</a></li>
+        <li><a href = "{{url_for('garantedCourses')}}">Garantované Kurzy</a></li>
         <li><a href = "{{url_for('logout')}}">Učené Kurzy</a></li>
         <li><a href = "{{url_for('mojProfil')}}">Môj Profil</a></li>
         <li><a href= "{{url_for('addCourse')}}">Pridanie kurzu</a></li>
@@ -49,9 +49,11 @@
         {% endif %}
     </ul>
     </div>
+    <form action="" method="post" novalidate>
         {{ form.courses.label }}
         {{ form.courses }}
-        {{ form.submit }}
+        {{ form.submit()}}
+    </form>
     <div>
 
     </div>

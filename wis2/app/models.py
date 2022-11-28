@@ -180,6 +180,21 @@ class Courses :
         conn.commit()
         cur.close()
         conn.close()
+    
+    def getTerminByCourse(self,name):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT id_termin FROM terminy where id_course=\''+name+'\';')
+        terminCourses = cur.fetchall()
+        data = []
+        for termin in terminCourses :
+            cur.execute('SELECT * FROM termin where id='+str(termin[0])+';')
+            if cur.rowcount == 0:
+                return ""
+            fetched = tuple(cur.fetchall())
+            data.append(fetched)
+        return data
+
 
 
     def addCourse(self,login,name,description,type):

@@ -39,15 +39,42 @@ def login():
             return render_template('betterLogin.html',form=form)
     else:
         return redirect(url_for("homePage",login = getUserFromSession()))
-@app.route('/garanted_courses')
+@app.route('/garanted_courses',methods=['GET', 'POST'])
 def garantedCourses():
     form = garantedCoursesForm()
     courseModel = Courses()
     form.courses.choices = courseModel.getCoursesByGarant(getUserFromSession())
     print(courseModel.getCoursesByGarant(getUserFromSession()))
-    if form.validate_on_submit:
+    if request.method == 'POST' and form.validate_on_submit:
         session["kurz"] = form.courses.data
+        return redirect(url_for('courseEditing'))
     return render_template('garanted_courses.html',form=form)
+
+@app.route('/course_editing')
+def courseEditing():
+    courseModel = Courses()
+    terminy = courseModel.getTerminByCourse(session["kurz"])
+    if terminy != "":
+        print(terminy)
+        terminy.sort()
+        return render_template('course_editing.html',terminy=terminy,course = session["kurz"])
+    else:
+        return render_template('course_editing.html',terminy="",course = session["kurz"])
+
+@app.route('/course_detail',methods=['GET', 'POST'])
+def courseDetail():
+    data = request.form
+    data = data.getlist('param1')
+    data = data[0]
+    courseModel = Courses()
+    terminy = courseModel.getTerminByCourse(data)
+    if terminy != "":
+        print(terminy)
+        terminy.sort()
+        return render_template('course_editing.html',terminy=terminy,course=data)
+    else:
+        return render_template('course_editing.html',terminy="",course=data)
+
 
 @app.route('/', methods=['GET','POST'])
 def mainPage():
