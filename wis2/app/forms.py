@@ -61,3 +61,6 @@ class newTermin(FlaskForm):
     date = StringField('Dátum')
     submit = SubmitField('Pridať')
 
+class submit(FlaskForm):
+    submit= SubmitField("Zapísať Kurz")
+
