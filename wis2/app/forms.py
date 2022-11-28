@@ -31,6 +31,10 @@ class manageCourse(FlaskForm):
     courses = SelectField('Kurzy',choices=names)
     submit = SubmitField('Ukáž')
 
+class garantedCoursesForm(FlaskForm):
+    courses = SelectField('Garantované Kurzy')
+    submit = SubmitField('Vyber')
+
 class setAcceptedCourse(FlaskForm):
     course = ''
     accepted = BooleanField('Schválené')

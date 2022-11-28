@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect,url_for,flash,session
 from app import app
 from app.models import User ,Courses
-from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm,myProfile,userSelecter
+from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm,myProfile,userSelecter,garantedCoursesForm
 from app.registrationForm import RegistrationForm
 from flask_bcrypt import Bcrypt
 import psycopg2
@@ -39,6 +39,15 @@ def login():
             return render_template('betterLogin.html',form=form)
     else:
         return redirect(url_for("homePage",login = getUserFromSession()))
+@app.route('/garanted_courses')
+def garantedCourses():
+    form = garantedCoursesForm()
+    courseModel = Courses()
+    form.courses.choices = courseModel.getCoursesByGarant(getUserFromSession())
+    print(courseModel.getCoursesByGarant(getUserFromSession()))
+    if form.validate_on_submit:
+        session["kurz"] = form.courses.data
+    return render_template('garanted_courses.html',form=form)
 
 @app.route('/', methods=['GET','POST'])
 def mainPage():

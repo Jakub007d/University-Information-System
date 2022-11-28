@@ -155,7 +155,14 @@ class Courses :
         cur.execute('SELECT name,login,description,accepted,price FROM courses where name=\''+name+'\';')
         courses = cur.fetchall()
         return courses
-    
+
+    def getCoursesByGarant(self,garant):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT name,name FROM courses where login=\''+garant+'\';')
+        courses = cur.fetchall()
+        return courses
+
     def getCourseState(self,name):
         conn = get_db_connection()
         cur = conn.cursor()
