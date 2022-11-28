@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect,url_for,flash,session
 from app import app
 from app.models import User ,Courses
-from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm,myProfile,userSelecter,garantedCoursesForm,newTermin
+from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm,myProfile,userSelecter,garantedCoursesForm,newTermin, submit
 from app.registrationForm import RegistrationForm
 from flask_bcrypt import Bcrypt
 import psycopg2
@@ -64,12 +64,19 @@ def courseDetail():
     data = data[0]
     courseModel = Courses()
     terminy = courseModel.getTerminByCourse(data)
+    session["kurz"] = data
     if terminy != "":
         print(terminy)
         terminy.sort()
-        return render_template('course_editing.html',terminy=terminy,course=data)
+        return render_template('course_editing.html',terminy=terminy,course=data,login=getUserFromSession())
     else:
-        return render_template('course_editing.html',terminy="",course=data)
+        return render_template('course_editing.html',terminy="",course=data,login=getUserFromSession())
+
+@app.route('/add_student',methods=['GET', 'POST'])
+def addStudent():
+    courseModel = Courses()
+    courseModel.addStudentToCourse(getUserFromSession(),session["kurz"])
+    return redirect(url_for("mainPage"))
 
 
 @app.route('/', methods=['GET','POST'])

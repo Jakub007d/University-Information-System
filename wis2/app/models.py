@@ -181,6 +181,16 @@ class Courses :
         cur.close()
         conn.close()
 
+    def addStudentToCourse(self,login,course_id):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('INSERT INTO students (id_course, id_users, accepted)'
+                'VALUES (%s, %s,%s)',
+                (course_id, login , 'FALSE')
+            )
+        conn.commit()
+        cur.close()
+        conn.close()
 
 
     def fetchCoursesNames(self):

@@ -49,9 +49,12 @@
             {%endfor%}
             {%endfor%}
         {%endif%}
+
     </table>
     <div>
-
+    {% if login != "" %}
+        <button><a href = "{{url_for('addStudent')}}">Prihlasiť sa na kurz</a></button>
+    {%endif%}
     </div>
     </div>
     {% endblock %}

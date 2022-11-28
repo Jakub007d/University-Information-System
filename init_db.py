@@ -69,6 +69,7 @@ cur.execute('CREATE TABLE terminy (id_course varchar (50) REFERENCES courses (na
                                  )
 cur.execute('CREATE TABLE students (id_course varchar (50) REFERENCES courses (name),'
                                  'id_users varchar (8) REFERENCES users (login),'
+                                 'accepted BOOLEAN NOT NULL,'
                                  'PRIMARY KEY(id_course, id_users));'
                                  )
 cur.execute('CREATE TABLE hodnotenie_studenta (id_termin int REFERENCES termin (id),'
