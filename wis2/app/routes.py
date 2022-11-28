@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect,url_for,flash,session
 from app import app
 from app.models import User ,Courses
-from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm,myProfile,userSelecter,garantedCoursesForm
+from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm,myProfile,userSelecter,garantedCoursesForm,newTermin
 from app.registrationForm import RegistrationForm
 from flask_bcrypt import Bcrypt
 import psycopg2
@@ -57,9 +57,9 @@ def courseEditing():
     if terminy != "":
         print(terminy)
         terminy.sort()
-        return render_template('course_editing.html',terminy=terminy,course = session["kurz"])
+        return render_template('course_editing.html',terminy=terminy,course = session["kurz"],login = getUserFromSession())
     else:
-        return render_template('course_editing.html',terminy="",course = session["kurz"])
+        return render_template('course_editing.html',terminy="",course = session["kurz"],login = getUserFromSession())
 
 @app.route('/course_detail',methods=['GET', 'POST'])
 def courseDetail():
@@ -81,6 +81,21 @@ def mainPage():
     coursesModel = Courses()
     courses = coursesModel.fetchAll()
     return render_template('homePage.html',courses=courses , login=getUserFromSession())
+
+@app.route('/add_termin', methods=['GET','POST'])
+def addTermin():
+    form = newTermin()
+    coursesModel = Courses()
+    course_id = request.form
+    course_id = course_id.getlist('course')
+    course_id = course_id[0]
+    form.type.choices = coursesModel.fetchTerminTypes()
+    #form.room.choices = coursesModel.fet
+    if form.validate_on_submit:
+        coursesModel.addTerminToCourse(form.type.data,form.room.data,form.name.data,form.description.data,form.date.data,course_id)
+        return redirect(url_for("homePage"))
+    
+
 
 @app.route('/home')
 def homePage():

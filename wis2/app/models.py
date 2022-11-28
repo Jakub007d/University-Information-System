@@ -141,6 +141,47 @@ class Courses :
         cur.execute('SELECT * FROM course_type ;')
         courses = cur.fetchall()
         return courses
+    
+    def fetchTerminTypes(self):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM termin_type ;')
+        termin_type = cur.fetchall()
+        return termin_type
+
+    def fetchRooms(self):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM room ;')
+        termin_type = cur.fetchall()
+        return termin_type
+    
+    def addTerminToCourse(self,type,room,name,description,date,course_id):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('INSERT INTO termin (type, room, name, description, date)'
+                'VALUES (%s, %s, %s,%s,%s) RETURNING id',
+                (type,
+                room,
+                name,
+                description,
+                date
+                )
+            )
+        id_termin = cur.fetchall()
+        id_termin = id_termin[0]#TODO mozna chyba uvidi sa 
+        print(id_termin)
+        cur.execute('INSERT INTO terminy (id_course, id_termin)'
+                'VALUES (%s, %s)',
+                (course_id,
+                id_termin
+                )
+            )
+        conn.commit()
+        cur.close()
+        conn.close()
+
+
 
     def fetchCoursesNames(self):
         conn = get_db_connection()

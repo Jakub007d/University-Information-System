@@ -52,3 +52,12 @@ class userSelecter(FlaskForm):
     names = users.fetchAllUsersLogins()
     userSelector = SelectField('Uživatelia',choices=names)
     submit = SubmitField('Ukáž')
+
+class newTermin(FlaskForm):
+    type = SelectField('Typ terminu')
+    room = SelectField('Miesnosť')
+    name = StringField('Meno termínu')
+    description = StringField('Popis')
+    date = StringField('Dátum')
+    submit = SubmitField('Pridať')
+
