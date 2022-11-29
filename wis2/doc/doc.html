@@ -40,11 +40,14 @@
 
 <h3>Video</h3>
 
-<p>#TODO</p> 
+<dd><a href="https://youtu.be/hGvbEtNmJe4">https://youtu.be/hGvbEtNmJe4</a></dd>
 
 <h2>Implementace</h2>
 <p>Informačný systém WIS2 je implementovaný pomocou frameworku <b>Flask</b>.</p>
-<p>#TODO</p>
+<p>K databázi pristupujeme pomocou knižnice <i>psycopg2</i>, kde sa pripojíme k databázi a vytvoríme kurzor, ktorým executujeme jednotlivé požiadavky na databázu.</p>
+<p>Heslá sme zahashovali pomocou knižnice <i>flask_bcrypt</i> a v zahashovanej forme ich ukladáme ku každému userovi na databázu.</p>
+<p>Formuláre sme vytvárali pomocou knižnice <i>wtf_forms</i>.</p>
+<p>Na prenos informácii medzi stránkami používame session.</p>
 
 <h3>Databáze</h3>
 <p>Aplikácia používa <b>PostgreSQL</b> databázu hostovanú na serveri <b>Render</b>.</p>
@@ -57,7 +60,7 @@
 <p>Ako HTTP server sme využili <b>Gunicorn</b>.</p>
 
 <h2>Známé problémy</h2>
-<p>Nemám žiadne probľémy.</p>
+<p>Pomalšie fungovanie databázy z dôvodu využitia free hostingovej stránky.</p>
 
 
 
