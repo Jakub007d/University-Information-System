@@ -30,7 +30,6 @@ cur.execute('CREATE TABLE users (login varchar (8) NOT NULL PRIMARY KEY,'
                                  'adress varchar (150) NOT NULL,'
                                  'enrollment_date date NOT NULL,'
                                  'password TEXT NOT NULL);'
-                                 # TODO password budze
                                  )
 
 cur.execute('CREATE TABLE course_type (id varchar (50) PRIMARY KEY,'
@@ -100,21 +99,11 @@ cur.execute('INSERT INTO users (login, name, adress, enrollment_date,password)'
               heslo.decode('utf8')
             )
 )
-heslo = bcript.generate_password_hash('ugabouga')
-cur.execute('INSERT INTO users (login, name, adress, enrollment_date,password)'
-            'VALUES (%s, %s, %s, %s,%s)',
-            ('xkokot00',
-             'Ultra Kokot', # Another great classic!
-             'Ulica Odpadlisko dejiin 12, Margecany, 98888, Slovensko',
-             '2025-08-31',
-             heslo.decode('utf8')
-             )
-            )
 heslo = bcript.generate_password_hash('1111')
 cur.execute('INSERT INTO users (login, name, adress, enrollment_date,password)'
             'VALUES (%s, %s, %s, %s,%s)',
             ('admin',
-             'Ignac Vsetkovie', # Another great classic!
+             'Ignac Vsetkovie',
              'Ulica Kukucinova 12, Vychodne, 98458, Slovensko',
              '1999-08-31',
              heslo.decode('utf8')
@@ -136,7 +125,7 @@ cur.execute('INSERT INTO termin_type (id,name)'
 cur.execute('INSERT INTO courses (name, login, type, description, accepted, price)'
             'VALUES (%s, %s, %s, %s,%s,%s)',
             ('IAS',
-             'admin', # Another great classic!
+             'admin',
              'distančne',
              'Správa informačného systému',
              'TRUE',
@@ -146,13 +135,13 @@ cur.execute('INSERT INTO courses (name, login, type, description, accepted, pric
 cur.execute('INSERT INTO lectors (id_course, id_users)'
             'VALUES (%s, %s)',
             ('IAS',
-             'admin' # Another great classic!
+             'admin'
              )
             )
 cur.execute('INSERT INTO courses (name, login, type, description, accepted, price)'
             'VALUES (%s, %s, %s, %s,%s,%s)',
             ('IIS',
-             'xsanch00', # Another great classic!
+             'xsanch00',
              'prezenčne',
              'Tvorenie informacného systému',
              'TRUE',
@@ -162,7 +151,7 @@ cur.execute('INSERT INTO courses (name, login, type, description, accepted, pric
 cur.execute('INSERT INTO lectors (id_course, id_users)'
             'VALUES (%s, %s)',
             ('IIS',
-             'xsanch00' # Another great classic!
+             'xsanch00'
              )
             )
 cur.execute('INSERT INTO room (id,name)'
@@ -188,7 +177,7 @@ cur.execute('INSERT INTO termin_type (id,name)'
 cur.execute('INSERT INTO termin (type, room, name, description, date)'
             'VALUES (%s, %s, %s, %s,%s)',
             ('Polsemestrálny test',
-             'D105', # Another great classic!
+             'D105',
              'Polsemestrálny test',
              'Test z prvých 3 látok predmetu',
              '2022-12-12'
@@ -197,7 +186,7 @@ cur.execute('INSERT INTO termin (type, room, name, description, date)'
 cur.execute('INSERT INTO termin (type, room, name, description, date)'
             'VALUES (%s, %s, %s, %s,%s)',
             ('Polsemestrálny test',
-             'L101', # Another great classic!
+             'L101',
              'Polsemestrálny test 2. skupina',
              'Test z prvých 3 látok predmetu',
              '2022-12-12'
@@ -206,19 +195,19 @@ cur.execute('INSERT INTO termin (type, room, name, description, date)'
 cur.execute('INSERT INTO lectors (id_course, id_users)'
             'VALUES (%s, %s)',
             ('IAS',
-             'xsanch00' # Another great classic!
+             'xsanch00'
              )
             )
 cur.execute('INSERT INTO terminy (id_course, id_termin)'
             'VALUES (%s, %s)',
             ('IAS',
-             '1' # Another great classic!
+             '1'
              )
             )
 cur.execute('INSERT INTO terminy (id_course, id_termin)'
             'VALUES (%s, %s)',
             ('IAS',
-             '2' # Another great classic!
+             '2'
              )
             )              
 conn.commit()
