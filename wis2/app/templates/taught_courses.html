@@ -3,7 +3,7 @@
     <head>
         <title>Wis 2</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    </head>
+      </head>
     <div>
         <ul class="nav">
         <li><a href = "https://www.fit.vut.cz/.cs"><img class="FITlogo" src="https://pbs.twimg.com/profile_images/658660856683610113/JLVEZWf9_400x400.png" alt="FIT"></a></li>
@@ -18,34 +18,41 @@
         <li><a href = "{{url_for('taughtCourses')}}">Učené Kurzy</a></li>
         <li><a href = "{{url_for('myCourses')}}">Navštevované Kurzy</a></li>
         <li><a href = "{{url_for('mojProfil')}}">Môj Profil</a></li>
-        <li><a href= "{{url_for('addCourse')}}">Pridanie Kurzu</a></li>
+        <li><a href= "{{url_for('addCourse')}}">Pridanie kurzu</a></li>
         <li><a href = "{{url_for('logout')}}">Logout</a></li>
         {%else%}
         <li><a href = "{{url_for('login')}}">Login</a></li>
         {% endif %}
     </ul>
     </div>
+    <br>
+    <div>
+    <table>
+        <tr>
+        <th>Meno</th>
+        <th>Garant</th>
+        <th>Typ</th>
+        <th>Popis</th>
+        </tr>
+    {%for cor in courses%}
+    {% for course in cor %}
+        <tr>
+            <th>
+                <form action="{{url_for('terminyForLector')}}" method="POST">
 
-        <form action="" method="post" novalidate>
-            {{ form.hidden_tag() }}
-            <table>
-                <tr>
-                <th>Login</th>
-                <th>Body</th>
-                <th></th>
-                </tr>
-                <tr>
-                    <th><p>
-                        {{ form.login.label}}
-                    </p></th>
-                    <th><p>
-                        {{ form.points}}
-                    </p></th>
-                    <th><p>
-                        {{ form.submit() }}
-                    </p></th>
-                </tr>
-            </table>
-        {% endblock %}
-    </form>
+                    <input type="hidden" name="course" value="{{course[0]}}" />
+                    
+                    <a href="#" onclick="this.parentNode.submit()">{{course[0]}}</a>
+                    
+                    </form>
+                </th>
+            <th>{{course[1]}}</th>
+            <th>{{course[2]}}</th>
+            <th>{{course[3]}}</th>
+        </tr>
+    {% endfor %}
+    {%endfor%}
+    </table>
+    {% endblock %}
+    </div>
 </html>

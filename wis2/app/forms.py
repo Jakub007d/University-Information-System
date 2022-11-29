@@ -68,6 +68,11 @@ class students(FlaskForm):
     students = SelectField('Neschválený študenti')
     submit = SubmitField('Schváliť registráciu')
 
+class terminEvaluationForm(FlaskForm):
+    students = SelectField('Študenti zapísaný na termín')
+    grade = StringField('Hodnotenie Termínu')
+    submit = SubmitField('Pridat hodnotenie')
+
 class addLectors(FlaskForm):
     userSelector = SelectField('Uživatelia')
     submit = SubmitField('Pridať lektora')

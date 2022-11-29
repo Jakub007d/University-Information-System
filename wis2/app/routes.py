@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect,url_for,flash,session
 from app import app
 from app.models import User ,Courses
-from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm,myProfile,userSelecter,garantedCoursesForm,newTermin, submit , students, addLectors
+from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm,myProfile,userSelecter,garantedCoursesForm,newTermin, submit , students, addLectors, terminEvaluationForm
 from app.registrationForm import RegistrationForm
 from flask_bcrypt import Bcrypt
 import psycopg2
@@ -247,6 +247,45 @@ def atendedCourse():
     if news is None:
         news = "Žiadne novinky"
     return render_template('atended_course.html',terminy=terminy,news=news,course=data)
+
+@app.route("/taught_courses",methods=['GET', 'POST'])
+def taughtCourses():
+    courseModel=Courses()
+    myCourses=courseModel.fetchTaughtCourses(getUserFromSession())
+    return render_template("taught_courses.html",courses=myCourses,login=getUserFromSession())
+
+@app.route("/terminy_for_lector",methods=['GET', 'POST'])
+def terminyForLector():
+    courseModel=Courses()
+    data = request.form
+    data = data.getlist('course')
+    try:
+        data = data[0]
+        session["kurz"] = data
+    except:
+        data = session["kurz"]
+    terminy = courseModel.getTerminByCourse(data)
+    print (terminy)
+    return render_template("terminy_for_lector.html",terminy=terminy,course=data)
+
+@app.route("/termin_evaluation",methods=['GET', 'POST'])
+def terminEvaluation():
+    form = terminEvaluationForm()
+    courseModel = Courses()
+    data = request.form
+    data = data.getlist('termin')
+    try:
+        data = data[0]
+        session["termin"] = data
+    except:
+        data = session["termin"]
+    form.students.choices = courseModel.fetchStudentsFromTermin(data)
+    grades = courseModel.fetchStudentGradesForTermin(data)
+    if form.validate_on_submit():
+        pass
+    return render_template("grade_termin.html",grades=grades)
+    
+
 
 @app.route("/termin_detail",methods=['GET', 'POST'])
 def terminDetail():

@@ -3,7 +3,7 @@
     <head>
         <title>Wis 2</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    </head>
+      </head>
     <div>
         <ul class="nav">
         <li><a href = "https://www.fit.vut.cz/.cs"><img class="FITlogo" src="https://pbs.twimg.com/profile_images/658660856683610113/JLVEZWf9_400x400.png" alt="FIT"></a></li>
@@ -24,28 +24,35 @@
         <li><a href = "{{url_for('login')}}">Login</a></li>
         {% endif %}
     </ul>
-    </div>
+    <h1>{% block title %} Termíny predmetu {{course}} {% endblock %}</h1>
+        <table>
+            <tr>
+            <th>Id</th>
+            <th>Typ</th>
+            <th>Miestnost</th>
+            <th>Meno</th>
+            <th>Popis</th>
+            <th>Dátum</th>
+            </tr>
+            {%for termin in terminy%}
+                <tr>
+                    <th>{{termin[0][0]}}</th>
+                    <th>{{termin[0][1]}}</th>
+                    <th>{{termin[0][2]}}</th>
+                    <th>
+                        <form action="{{url_for('terminEvaluation')}}" method="POST">
 
-        <form action="" method="post" novalidate>
-            {{ form.hidden_tag() }}
-            <table>
-                <tr>
-                <th>Login</th>
-                <th>Body</th>
-                <th></th>
+                            <input type="hidden" name="termin" value="{{termin[0][0]}}" />
+                            
+                            <a href="#" onclick="this.parentNode.submit()">{{termin[0][3]}}</a>
+                            
+                            </form>
+                    </th>
+                    <th>{{termin[0][4]}}</th>
+                    <th>{{termin[0][5]}}</th>
+                    
                 </tr>
-                <tr>
-                    <th><p>
-                        {{ form.login.label}}
-                    </p></th>
-                    <th><p>
-                        {{ form.points}}
-                    </p></th>
-                    <th><p>
-                        {{ form.submit() }}
-                    </p></th>
-                </tr>
-            </table>
-        {% endblock %}
-    </form>
+                {%endfor%}
+        </table>
+{% endblock %}
 </html>

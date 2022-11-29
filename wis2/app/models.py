@@ -140,6 +140,18 @@ class Courses :
         cur = conn.cursor()
         cur.execute('SELECT id_users,id_users FROM students WHERE id_course=\''+id_course+'\' and accepted=\'False\';')
         return cur.fetchall()
+    
+    def fetchStudentsFromTermin(self,id_termin):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT id_users,id_users FROM hodnotenie_studenta WHERE id_termin=\''+id_termin+'\';')
+        return cur.fetchall()
+    
+    def fetchStudentGradesForTermin(self,id_termin):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT id_users,grade FROM hodnotenie_studenta WHERE id_termin=\''+id_termin+'\';')
+        return cur.fetchall()
 
     def updateStudentStatus(self,id_student,id_course):
         conn = get_db_connection()
@@ -271,6 +283,23 @@ class Courses :
             if grade[0][0] == None:
                 return "-"
             return grade[0][0]
+    
+    def fetchTaughtCourses(self,login):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT id_course FROM lectors where id_users=\''+login+'\';')
+        coursesIds=cur.fetchall()
+        data = []
+        for course in coursesIds :
+            cur.execute('SELECT * FROM courses where name=\''+str(course[0])+'\';')
+            if cur.rowcount == 0:
+                return ""
+            fetched = cur.fetchall()
+            data.append(fetched)
+        print(data)
+        return data
+
+
 
     def fetchTerminById(self,id_termin):
         conn = get_db_connection()
