@@ -128,7 +128,7 @@ def addTermin():
             course_id=""
     form.type.choices = coursesModel.fetchTerminTypes()
     form.room.choices = coursesModel.fetchRooms()
-    if form.validate_on_submit and form.name.data != None:
+    if form.validate_on_submit() and form.name.data != None:
         coursesModel.addTerminToCourse(form.type.data,form.room.data,form.name.data,form.description.data,form.date.data,course_id)
         return redirect(url_for("homePage"))
     
