@@ -76,3 +76,11 @@ class terminEvaluationForm(FlaskForm):
 class addLectors(FlaskForm):
     userSelector = SelectField('Uživatelia')
     submit = SubmitField('Pridať lektora')
+
+class addRoomForm(FlaskForm):
+    room = StringField('Miesnosť')
+    submit = SubmitField('Pridať Miestnosť')
+
+class newNews(FlaskForm):
+    news = StringField('Noviny')
+    submit = SubmitField('Pridať Novinky')

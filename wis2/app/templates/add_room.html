@@ -24,43 +24,20 @@
         {% endif %}
     </ul>
     </div>
-
-    <h1> {{ course }} </h1>
-        <form action="" method="post" novalidate>
-            {{ form.hidden_tag() }}
-            <p>
-                {{ form.type.label}}
-                {{ form.type}}
-            </p>
-            <p>
-                {{ form.room.label}}
-                {{ form.room}}
-            </p>
-            <p>
-                {{ form.name.label}}
-                {{ form.name}}
-            </p>
-            <p>
-                {{ form.description.label}}
-                {{ form.description}}
-            </p>
-            <p>
-                {{ form.date.label}}
-                {{ form.date}}
-            </p>
-            <p>
-                {{ form.submit() }}
-            </p>
-        </form>
-        <form action="" method="post" novalidate>
-            {{ form1.hidden_tag() }}
-            <p>
-                {{ form1.news.label}}
-                {{ form1.news}}
-            </p>
-            <p>
-                {{ form1.submit() }}
-            </p>
-    {% endblock %}
-
+    <div>
+        <button><a href = "{{url_for('mainPage')}}">Back</a></button>
+    </div>
+    <h3>Pridanie miesnosti</h3>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.room.label }}<br>
+            {{ form.room(size=32) }}
+            {% for error in form.room.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
 </html>

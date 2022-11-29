@@ -117,9 +117,6 @@ cur.execute('INSERT INTO course_type (id,name)'
             'VALUES(\'distančne\',\'distančne\')'
             )
 cur.execute('INSERT INTO termin_type (id,name)'
-            'VALUES(\'Polsemestrálny Test\',\'Polsemestrálny Test\')'
-            )
-cur.execute('INSERT INTO termin_type (id,name)'
             'VALUES(\'Zaverečná skúška\',\'Zaverečná skúška\')'
             )
 cur.execute('INSERT INTO courses (name, login, type, description, accepted, price)'
@@ -192,6 +189,15 @@ cur.execute('INSERT INTO termin (type, room, name, description, date)'
              '2022-12-12'
              )
             )
+cur.execute('INSERT INTO termin (type, room, name, description, date)'
+            'VALUES (%s, %s, %s, %s,%s)',
+            ('Zaverečná skúška',
+             'L101', # Another great classic!
+             '1. termín',
+             'Zaverečná skúška z predmetu IIS',
+             '2022-12-11'
+             )
+            )
 cur.execute('INSERT INTO lectors (id_course, id_users)'
             'VALUES (%s, %s)',
             ('IAS',
@@ -209,7 +215,13 @@ cur.execute('INSERT INTO terminy (id_course, id_termin)'
             ('IAS',
              '2'
              )
-            )              
+            ) 
+cur.execute('INSERT INTO terminy (id_course, id_termin)'
+            'VALUES (%s, %s)',
+            ('IIS',
+             '3' # Another great classic!
+             )
+            )             
 conn.commit()
 
 cur.close()
