@@ -110,7 +110,7 @@ def myCourses():
     courseModel = Courses()
     courses = courseModel.fetchCoursesForStudent(getUserFromSession())
     return render_template('my_courses.html',courses=courses)
-    
+
 @app.route('/add_termin', methods=['GET','POST'])
 def addTermin():
     form = newTermin()
@@ -231,6 +231,47 @@ def registration():
             return render_template('home.html',login = session["user"])
     else:
         return render_template('registration.html',form=form)
+
+@app.route("/atended_course",methods=['GET', 'POST'])
+def atendedCourse():
+    courseModel=Courses()
+    data = request.form
+    data = data.getlist('course')
+    try:
+        data = data[0]
+        session["kurz"] = data
+    except:
+        data = session["kurz"]
+    terminy = courseModel.getTerminByCourse(data)
+    news = courseModel.fetchCourseNews(data)
+    if news is None:
+        news = "Žiadne novinky"
+    return render_template('atended_course.html',terminy=terminy,news=news,course=data)
+
+@app.route("/termin_detail",methods=['GET', 'POST'])
+def terminDetail():
+    courseModel=Courses()
+    form=submit()
+    data = request.form
+    data = data.getlist('termin')
+    try:
+        data = data[0]
+        session["termin"] = data
+    except:
+        data = session["termin"]
+    grade = courseModel.isUserSignedToTermin(getUserFromSession(),data)
+    if grade == False:
+        grade="None"
+    termin = courseModel.fetchTerminById(data)
+    if form.validate_on_submit():
+        courseModel.singStudentToTermin(getUserFromSession(),data)
+        return redirect(url_for("terminDetail"))
+    return render_template("termin_student_detail.html",form=form,grade=grade,termin=termin)
+    
+    
+    
+
+    
 
 
 

@@ -18,31 +18,44 @@
         <li><a href = "{{url_for('logout')}}">Učené Kurzy</a></li>
         <li><a href = "{{url_for('myCourses')}}">Navštevované Kurzy</a></li>
         <li><a href = "{{url_for('mojProfil')}}">Môj Profil</a></li>
-        <li><a href= "{{url_for('addCourse')}}">Pridanie kurzu</a></li>
+        <li><a href= "{{url_for('addCourse')}}">Pridanie Kurzu</a></li>
         <li><a href = "{{url_for('logout')}}">Logout</a></li>
         {%else%}
         <li><a href = "{{url_for('login')}}">Login</a></li>
         {% endif %}
     </ul>
-    </div>
-    <br>
+    <h1>{% block title %} Detail Terminu {% endblock %}</h1>
+    {%if grade =="None" %}
     <form action="" method="post" novalidate>
-    {{ form.csrf_token }}
-    {{form.userSelector}}
-    {{form.submit()}}
+        {{ form.csrf_token }}
+        {{form.submit()}}
     </form>
-    <table>
-        <tr>
-        <th>Lektori</th>
-        </tr>
-    {% for lector in lectors %}
-        <tr>
-            <th>
-                {{lector[0]}}
-            </th>
-        </th>
-        </tr>
-    {% endfor %}
-    </table>
-{%endblock%}
+    {%else%}
+        <p>Prihlásený na termín<p>
+    {%endif%}
+        <table>
+            <tr>
+            <th>Id</th>
+            <th>Typ</th>
+            <th>Miestnost</th>
+            <th>Meno</th>
+            <th>Popis</th>
+            <th>Dátum</th>
+            {%if grade !="None" %}
+            <th>Body</th>
+            {%endif%}
+            </tr>
+                <tr>
+                    <th>{{termin[0][0]}}</th>
+                    <th>{{termin[0][1]}}</th>
+                    <th>{{termin[0][2]}}</th>
+                    <th>{{termin[0][3]}}</th>
+                    <th>{{termin[0][4]}}</th>
+                    <th>{{termin[0][5]}}</th>
+                    {%if grade !="None" %}
+                    <th>{{grade}}</th>
+                    {%endif%}
+                </tr>
+        </table>
+{% endblock %}
 </html>

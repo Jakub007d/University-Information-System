@@ -253,6 +253,44 @@ class Courses :
         cur.close()
         conn.close()
     
+    def fetchCourseNews(self,id_course):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT news FROM courses where name=\''+id_course+'\';')
+        state = cur.fetchall()
+        return state[0][0]
+    
+    def isUserSignedToTermin(self,login,id_termin):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT grade FROM hodnotenie_studenta where id_termin=\''+id_termin+'\' and id_users=\''+login+'\';')
+        grade = cur.fetchall()
+        if cur.rowcount == 0:
+            return False
+        else:
+            if grade[0][0] == None:
+                return "-"
+            return grade[0][0]
+
+    def fetchTerminById(self,id_termin):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM termin where id=\''+id_termin+'\';')
+        termin = cur.fetchall()
+        return termin
+    
+    def singStudentToTermin(self,login,id_termin):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('INSERT INTO hodnotenie_studenta (id_termin, id_users)'
+                'VALUES (%s, %s)',
+                (id_termin, login)
+            )
+        conn.commit()
+        cur.close()
+        conn.close()
+
+    
     def getTerminByCourse(self,name):
         conn = get_db_connection()
         cur = conn.cursor()
@@ -265,6 +303,7 @@ class Courses :
                 return ""
             fetched = tuple(cur.fetchall())
             data.append(fetched)
+        print(data)
         return data
 
 

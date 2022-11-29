@@ -24,33 +24,40 @@
         <li><a href = "{{url_for('login')}}">Login</a></li>
         {% endif %}
     </ul>
-    <h1>{% block title %} Navštevované Kurzy: {% endblock %}</h1>
-    <table>
-        <tr>
-        <th>Meno</th>
-        <th>Garant</th>
-        <th>Typ</th>
-        <th>Popis</th>
-        </tr>
-    {%for cor in courses%}
-    {% for course in cor %}
-        <tr>
-            <th>
-                <form action="{{url_for('atendedCourse')}}" method="POST">
+    <h1>{% block title %} {{course}} {% endblock %}</h1>
+        <table>
+            <tr>
+            <th>Id</th>
+            <th>Typ</th>
+            <th>Miestnost</th>
+            <th>Meno</th>
+            <th>Popis</th>
+            <th>Dátum</th>
+            </tr>
+            {%if terminy != ""%}
+                {%for termin in terminy%}
+                {%for term in termin%}
+                <tr>
+                    <th>{{term[0]}}</th>
+                    <th>{{term[1]}}</th>
+                    <th>{{term[2]}}</th>
+                    <th>
+                        <form action="{{url_for('terminDetail')}}" method="POST">
 
-                    <input type="hidden" name="param1" value="{{course[0]}}" />
-                    
-                    <a href="#" onclick="this.parentNode.submit()">{{course[0]}}</a>
-                    
-                    </form>
-                </th>
-            <th>{{course[1]}}</th>
-            <th>{{course[2]}}</th>
-            <th>{{course[3]}}</th>
-        </tr>
-    {% endfor %}
-    {%endfor%}
-    </table>
+                            <input type="hidden" name="termin" value="{{term[0]}}" />
+                            
+                            <a href="#" onclick="this.parentNode.submit()">{{term[3]}}</a>
+                            
+                            </form>
+                        </th>
+                    <th>{{term[4]}}</th>
+                    <th>{{term[5]}}</th>
+                </tr>
+                {%endfor%}
+                {%endfor%}
+            {%endif%}
+    
+        </table>
+        <p>{{news}}</p>
 {% endblock %}
-    <button><a href = "{{url_for('login')}}">Login</a></button>
 </html>
