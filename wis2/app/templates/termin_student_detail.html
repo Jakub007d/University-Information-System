@@ -24,7 +24,7 @@
         {% endif %}
     </ul>
     <h1>{% block title %} Detail Terminu {% endblock %}</h1>
-    {%if grade =="None" %}
+    {%if not signed %}
     <form action="" method="post" novalidate>
         {{ form.csrf_token }}
         {{form.submit()}}
@@ -40,7 +40,7 @@
             <th class="wisblue">Meno</th>
             <th class="wisblue">Popis</th>
             <th class="wisblue">Dátum</th>
-            {%if grade !="None" %}
+            {%if signed %}
             <th class="wisblue"> Body</th>
             {%endif%}
             </tr>
@@ -51,7 +51,7 @@
                     <th>{{termin[0][3]}}</th>
                     <th>{{termin[0][4]}}</th>
                     <th>{{termin[0][5]}}</th>
-                    {%if grade !="None" %}
+                    {%if signed %}
                     <th>{{grade}}</th>
                     {%endif%}
                 </tr>

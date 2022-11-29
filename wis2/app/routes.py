@@ -309,6 +309,7 @@ def terminDetail():
     courseModel=Courses()
     form=submit()
     data = request.form
+    signed=True
     data = data.getlist('termin')
     try:
         data = data[0]
@@ -316,13 +317,13 @@ def terminDetail():
     except:
         data = session["termin"]
     grade = courseModel.isUserSignedToTermin(getUserFromSession(),data)
-    if grade == False:
-        grade="None"
+    if grade == "nOn":
+        signed = False
     termin = courseModel.fetchTerminById(data)
     if form.validate_on_submit():
         courseModel.singStudentToTermin(getUserFromSession(),data)
         return redirect(url_for("terminDetail"))
-    return render_template("termin_student_detail.html",form=form,grade=grade,termin=termin)
+    return render_template("termin_student_detail.html",form=form,grade=grade,termin=termin,signed=signed)
     
     
     
