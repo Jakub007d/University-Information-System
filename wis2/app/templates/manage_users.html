@@ -38,8 +38,7 @@
             <p>
                 {{ form.submit() }}
             </p>
-        <button><a href = "{{url_for('login')}}">Správa Uživateľov</a></button><br>
-        <button><a href = "{{url_for('login')}}">Správa Kurzov</a></button><br>
-        <button><a href = "{{url_for('login')}}">Zadávanie Miestností</a></button>
+        <button><a href = "{{url_for('manageUsers')}}">Správa Uživateľov</a></button><br>
+        <button><a href = "{{url_for('addRoom')}}">Zadávanie Miestností</a></button>
     {% endblock %}
 </html>
