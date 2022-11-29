@@ -271,6 +271,18 @@ class Courses :
         cur.execute('SELECT news FROM courses where name=\''+id_course+'\';')
         state = cur.fetchall()
         return state[0][0]
+
+    def updateTerminPoints(self,login,points,id_termin):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        try:
+            cur.execute('UPDATE hodnotenie_studenta SET grade=\''+points+'\' WHERE id_users=\''+login+'\' and id_termin=\''+id_termin+'\' ;')
+        except:
+            return False
+        conn.commit()
+        cur.close()
+        conn.close()
+        return True
     
     def isUserSignedToTermin(self,login,id_termin):
         conn = get_db_connection()

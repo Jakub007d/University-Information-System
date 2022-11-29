@@ -25,6 +25,22 @@
         {% endif %}
     </ul>
     <h1>{% block title %} Zadané hodnotenia študentov{{course}} {% endblock %}</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{form.students.label}}
+            {{ form.students}}
+        </p>
+        <p>
+            {{form.grade.label}}
+            {{form.grade}}
+        </p>
+        <p>
+            {{ form.submit() }}
+        </p>
+    </form>
+    <br>
+    <h2>Už zadané hodnotenie termínu :</h2>
         <table>
             <tr>
             <th>Login</th>

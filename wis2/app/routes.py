@@ -282,8 +282,9 @@ def terminEvaluation():
     form.students.choices = courseModel.fetchStudentsFromTermin(data)
     grades = courseModel.fetchStudentGradesForTermin(data)
     if form.validate_on_submit():
-        pass
-    return render_template("grade_termin.html",grades=grades)
+        courseModel.updateTerminPoints(form.students.data,form.grade.data,data)
+        return redirect(url_for("terminEvaluation"))
+    return render_template("grade_termin.html",grades=grades,form=form)
     
 
 
