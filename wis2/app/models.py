@@ -175,6 +175,27 @@ class Courses :
         courses = cur.fetchall()
         return courses
     
+    def addRoomModel(self,name):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('INSERT INTO room (id, name)'
+                'VALUES (%s, %s)',
+                (name,
+                name
+                )
+            )
+        conn.commit()
+        cur.close()
+        conn.close()
+    
+    def addNewsToCourse(self,news,name):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('UPDATE courses SET news=\''+news+'\' WHERE name=\''+name+'\';')
+        conn.commit()
+        cur.close()
+        conn.close()
+    
     def fetchTerminTypes(self):
         conn = get_db_connection()
         cur = conn.cursor()

@@ -28,7 +28,7 @@
     <div>
             <button><a href = "{{url_for('mainPage')}}">Back</a></button>
         </div>
-        <h1>Registrace</h1>
+        <h1>Potvrdzovanie kurzov:</h1>
         <form action="" method="post" novalidate>
             {{ form.hidden_tag() }}
             <p>
@@ -59,7 +59,6 @@
     {% endfor %}
             {% endif %}
         <button><a href = "{{url_for('manageUsers')}}">Správa Uživateľov</a></button><br>
-        <button><a href = "{{url_for('login')}}">Správa Kurzov</a></button><br>
-        <button><a href = "{{url_for('login')}}">Zadávanie Miestností</a></button>
+        <button><a href = "{{url_for('addRoom')}}">Zadávanie Miestností</a></button>
     {% endblock %}
 </html>

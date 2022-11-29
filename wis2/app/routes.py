@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect,url_for,flash,session
 from app import app
 from app.models import User ,Courses
-from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm,myProfile,userSelecter,garantedCoursesForm,newTermin, submit , students, addLectors, terminEvaluationForm
+from app.forms import LoginForm,addCourseForm,manageCourse,setAcceptedCourse,UserEditForm,myProfile,userSelecter,garantedCoursesForm,newTermin, submit , students, addLectors, terminEvaluationForm, addRoomForm , newNews
 from app.registrationForm import RegistrationForm
 from flask_bcrypt import Bcrypt
 import psycopg2
@@ -114,6 +114,7 @@ def myCourses():
 @app.route('/add_termin', methods=['GET','POST'])
 def addTermin():
     form = newTermin()
+    form1 = newNews()
     coursesModel = Courses()
     course_id = request.form
     course_id = course_id.getlist('course')
@@ -130,7 +131,10 @@ def addTermin():
     if form.validate_on_submit and form.name.data != None:
         coursesModel.addTerminToCourse(form.type.data,form.room.data,form.name.data,form.description.data,form.date.data,course_id)
         return redirect(url_for("homePage"))
-    return render_template("termin_add.html",form=form,course=course_id)
+    
+    if form1.validate_on_submit():
+        coursesModel.addNewsToCourse(form1.news.data,course_id)
+    return render_template("termin_add.html",form=form,course=course_id,form1=form1)
 
 
 @app.route('/accept_student',methods=['GET','POST'])
@@ -167,6 +171,16 @@ def logout():
         return redirect(url_for("mainPage",login = getUserFromSession()))
     return redirect(url_for("mainPage",login = getUserFromSession()))
 
+
+@app.route("/add_room",methods=['GET','POST'])
+def addRoom():
+    form = addRoomForm()
+    courseModel = Courses()
+    if form.validate_on_submit():
+        courseModel.addRoomModel(form.room.data)
+        return redirect(url_for("addRoom"))
+    return render_template("add_room.html",form=form)
+    
 
 
 @app.route('/kurzy')
@@ -282,7 +296,9 @@ def terminEvaluation():
     form.students.choices = courseModel.fetchStudentsFromTermin(data)
     grades = courseModel.fetchStudentGradesForTermin(data)
     if form.validate_on_submit():
-        courseModel.updateTerminPoints(form.students.data,form.grade.data,data)
+        fail = courseModel.updateTerminPoints(form.students.data,form.grade.data,data)
+        if fail == False:
+            form.grade.errors.append("Zlý formát hodnotenia")
         return redirect(url_for("terminEvaluation"))
     return render_template("grade_termin.html",grades=grades,form=form)
     
