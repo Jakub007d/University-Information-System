@@ -7,7 +7,6 @@
     <div>
         <ul class="nav">
         <li><a href = "https://www.fit.vut.cz/.cs"><img class="FITlogo" src="https://pbs.twimg.com/profile_images/658660856683610113/JLVEZWf9_400x400.png" alt="FIT"></a></li>
-        <li><a href = "{{url_for('kurzy')}}">Kurzy</a></li>
         <li><a href = "{{url_for('mainPage')}}">Home</a></li>
         {% block content %}
         {% if login == "admin" %}
@@ -33,7 +32,7 @@
     </form>
     <table>
         <tr>
-        <th>Lektori</th>
+        <th class="wisblue">Lektori</th>
         </tr>
     {% for lector in lectors %}
         <tr>
