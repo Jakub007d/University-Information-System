@@ -62,7 +62,7 @@ class newTermin(FlaskForm):
     submit = SubmitField('Pridať')
 
 class submit(FlaskForm):
-    submit= SubmitField("Zapísať Kurz")
+    submit= SubmitField("Zapísať Termin")
 
 class students(FlaskForm):
     students = SelectField('Neschválený študenti')

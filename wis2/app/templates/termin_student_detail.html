@@ -24,9 +24,38 @@
         <li><a href = "{{url_for('login')}}">Login</a></li>
         {% endif %}
     </ul>
-    </div>
-
-    <div>
-
-    </div>
+    <h1>{% block title %} Detail Terminu {% endblock %}</h1>
+    {%if grade =="None" %}
+    <form action="" method="post" novalidate>
+        {{ form.csrf_token }}
+        {{form.submit()}}
+    </form>
+    {%else%}
+        <p>Prihlásený na termín<p>
+    {%endif%}
+        <table>
+            <tr>
+            <th>Id</th>
+            <th>Typ</th>
+            <th>Miestnost</th>
+            <th>Meno</th>
+            <th>Popis</th>
+            <th>Dátum</th>
+            {%if grade !="None" %}
+            <th>Body</th>
+            {%endif%}
+            </tr>
+                <tr>
+                    <th>{{termin[0][0]}}</th>
+                    <th>{{termin[0][1]}}</th>
+                    <th>{{termin[0][2]}}</th>
+                    <th>{{termin[0][3]}}</th>
+                    <th>{{termin[0][4]}}</th>
+                    <th>{{termin[0][5]}}</th>
+                    {%if grade !="None" %}
+                    <th>{{grade}}</th>
+                    {%endif%}
+                </tr>
+        </table>
+{% endblock %}
 </html>

@@ -24,9 +24,40 @@
         <li><a href = "{{url_for('login')}}">Login</a></li>
         {% endif %}
     </ul>
-    </div>
+    <h1>{% block title %} {{course}} {% endblock %}</h1>
+        <table>
+            <tr>
+            <th>Id</th>
+            <th>Typ</th>
+            <th>Miestnost</th>
+            <th>Meno</th>
+            <th>Popis</th>
+            <th>Dátum</th>
+            </tr>
+            {%if terminy != ""%}
+                {%for termin in terminy%}
+                {%for term in termin%}
+                <tr>
+                    <th>{{term[0]}}</th>
+                    <th>{{term[1]}}</th>
+                    <th>{{term[2]}}</th>
+                    <th>
+                        <form action="{{url_for('terminDetail')}}" method="POST">
 
-    <div>
-
-    </div>
+                            <input type="hidden" name="termin" value="{{term[0]}}" />
+                            
+                            <a href="#" onclick="this.parentNode.submit()">{{term[3]}}</a>
+                            
+                            </form>
+                        </th>
+                    <th>{{term[4]}}</th>
+                    <th>{{term[5]}}</th>
+                </tr>
+                {%endfor%}
+                {%endfor%}
+            {%endif%}
+    
+        </table>
+        <p>{{news}}</p>
+{% endblock %}
 </html>
