@@ -128,7 +128,7 @@ def addTermin():
             course_id=""
     form.type.choices = coursesModel.fetchTerminTypes()
     form.room.choices = coursesModel.fetchRooms()
-    if form.validate_on_submit and form.name.data != None:
+    if form.validate_on_submit() and form.name.data != None:
         coursesModel.addTerminToCourse(form.type.data,form.room.data,form.name.data,form.description.data,form.date.data,course_id)
         return redirect(url_for("homePage"))
     
@@ -309,6 +309,7 @@ def terminDetail():
     courseModel=Courses()
     form=submit()
     data = request.form
+    signed=True
     data = data.getlist('termin')
     try:
         data = data[0]
@@ -316,13 +317,13 @@ def terminDetail():
     except:
         data = session["termin"]
     grade = courseModel.isUserSignedToTermin(getUserFromSession(),data)
-    if grade == False:
-        grade="None"
+    if grade == "nOn":
+        signed = False
     termin = courseModel.fetchTerminById(data)
     if form.validate_on_submit():
         courseModel.singStudentToTermin(getUserFromSession(),data)
         return redirect(url_for("terminDetail"))
-    return render_template("termin_student_detail.html",form=form,grade=grade,termin=termin)
+    return render_template("termin_student_detail.html",form=form,grade=grade,termin=termin,signed=signed)
     
     
     

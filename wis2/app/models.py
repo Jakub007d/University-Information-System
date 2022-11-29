@@ -311,7 +311,7 @@ class Courses :
         cur.execute('SELECT grade FROM hodnotenie_studenta where id_termin=\''+id_termin+'\' and id_users=\''+login+'\';')
         grade = cur.fetchall()
         if cur.rowcount == 0:
-            return False
+            return "nOn"
         else:
             if grade[0][0] == None:
                 return "-"
