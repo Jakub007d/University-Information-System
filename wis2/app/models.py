@@ -186,8 +186,8 @@ class Courses :
         conn = get_db_connection()
         cur = conn.cursor()
         cur.execute('SELECT * FROM room ;')
-        termin_type = cur.fetchall()
-        return termin_type
+        rooms = cur.fetchall()
+        return rooms
     
     def addTerminToCourse(self,type,room,name,description,date,course_id):
         conn = get_db_connection()

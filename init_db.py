@@ -33,27 +33,27 @@ cur.execute('CREATE TABLE users (login varchar (8) NOT NULL PRIMARY KEY,'
                                  # TODO password budze
                                  )
 
-cur.execute('CREATE TABLE course_type (id serial PRIMARY KEY,'
+cur.execute('CREATE TABLE course_type (id varchar (50) PRIMARY KEY,'
                                  'name varchar (50) NOT NULL);'
                                  )
 cur.execute('CREATE TABLE courses (name varchar (50) NOT NULL PRIMARY KEY,'
                                  'login varchar (8) REFERENCES users (login),'
-                                 'type int REFERENCES course_type (id),'
+                                 'type varchar (50) REFERENCES course_type (id),'
                                  'description varchar (250),'
                                  'accepted BOOLEAN NOT NULL,'
                                  'price varchar (250),'
                                  'news varchar (250) );'
                                  )
 
-cur.execute('CREATE TABLE room (id SERIAL PRIMARY KEY,'
+cur.execute('CREATE TABLE room (id varchar (50) PRIMARY KEY,'
                                  'name varchar (50) NOT NULL);'
                                  )
-cur.execute('CREATE TABLE termin_type (id SERIAL PRIMARY KEY,'
+cur.execute('CREATE TABLE termin_type (id varchar (50) PRIMARY KEY,'
                                  'name varchar (50) NOT NULL);'
                                  )
 cur.execute('CREATE TABLE termin (id SERIAL PRIMARY KEY,'
-                                 'type int REFERENCES termin_type (id),'
-                                 'room int REFERENCES room (id),'
+                                 'type varchar (50) REFERENCES termin_type (id),'
+                                 'room varchar (50) REFERENCES room (id),'
                                  'name varchar (50) NOT NULL,'
                                  'description varchar (250),'
                                  'date date NOT NULL);'
@@ -121,26 +121,23 @@ cur.execute('INSERT INTO users (login, name, adress, enrollment_date,password)'
              )
             )
 
-cur.execute('INSERT INTO course_type (name)'
-            'VALUES(\'prezenčne\')'
+cur.execute('INSERT INTO course_type (id,name)'
+            'VALUES(\'prezenčne\',\'prezenčne\')'
             )
-cur.execute('INSERT INTO course_type (name)'
-            'VALUES(\'distančne\')'
+cur.execute('INSERT INTO course_type (id,name)'
+            'VALUES(\'distančne\',\'distančne\')'
             )
-cur.execute('INSERT INTO termin_type (name)'
-            'VALUES(\'Polsemestrálny Test\')'
+cur.execute('INSERT INTO termin_type (id,name)'
+            'VALUES(\'Polsemestrálny Test\',\'Polsemestrálny Test\')'
             )
-cur.execute('INSERT INTO termin_type (name)'
-            'VALUES(\'Zaverečná skúška\')'
-            )
-cur.execute('INSERT INTO termin_type (name)'
-            'VALUES(\'Projekt\')'
+cur.execute('INSERT INTO termin_type (id,name)'
+            'VALUES(\'Zaverečná skúška\',\'Zaverečná skúška\')'
             )
 cur.execute('INSERT INTO courses (name, login, type, description, accepted, price)'
             'VALUES (%s, %s, %s, %s,%s,%s)',
             ('IAS',
              'admin', # Another great classic!
-             '1',
+             'distančne',
              'Správa informačného systému',
              'TRUE',
              'Zadarmo'
@@ -156,7 +153,7 @@ cur.execute('INSERT INTO courses (name, login, type, description, accepted, pric
             'VALUES (%s, %s, %s, %s,%s,%s)',
             ('IIS',
              'xsanch00', # Another great classic!
-             '1',
+             'prezenčne',
              'Tvorenie informacného systému',
              'TRUE',
              'Zadarmo'
@@ -168,33 +165,30 @@ cur.execute('INSERT INTO lectors (id_course, id_users)'
              'xsanch00' # Another great classic!
              )
             )
-cur.execute('INSERT INTO room (name)'
-            'VALUES(\'D105\')'
+cur.execute('INSERT INTO room (id,name)'
+            'VALUES(\'D105\',\'D105\')'
             )
 
-cur.execute('INSERT INTO room (name)'
-            'VALUES(\'D215\')'
+cur.execute('INSERT INTO room (id,name)'
+            'VALUES(\'D215\',\'D215\')'
             )
-cur.execute('INSERT INTO room (name)'
-            'VALUES(\'L101\')'
+cur.execute('INSERT INTO room (id,name)'
+            'VALUES(\'L101\',\'L101\')'
             )
 
-cur.execute('INSERT INTO termin_type (name)'
-            'VALUES(\'Domáca uloha\')'
+cur.execute('INSERT INTO termin_type (id,name)'
+            'VALUES(\'Domáca uloha\',\'Domáca uloha\')'
             )
-cur.execute('INSERT INTO termin_type (name)'
-            'VALUES(\'Projekt\')'
+cur.execute('INSERT INTO termin_type (id,name)'
+            'VALUES(\'Projekt\',\'Projekt\')'
             )
-cur.execute('INSERT INTO termin_type (name)'
-            'VALUES(\'Polsemestrálny test\')'
-            )
-cur.execute('INSERT INTO termin_type (name)'
-            'VALUES(\'Záverečná skúška\')'
+cur.execute('INSERT INTO termin_type (id,name)'
+            'VALUES(\'Polsemestrálny test\',\'Polsemestrálny test\')'
             )
 cur.execute('INSERT INTO termin (type, room, name, description, date)'
             'VALUES (%s, %s, %s, %s,%s)',
-            ('3',
-             '1', # Another great classic!
+            ('Polsemestrálny test',
+             'D105', # Another great classic!
              'Polsemestrálny test',
              'Test z prvých 3 látok predmetu',
              '2022-12-12'
@@ -202,8 +196,8 @@ cur.execute('INSERT INTO termin (type, room, name, description, date)'
             )
 cur.execute('INSERT INTO termin (type, room, name, description, date)'
             'VALUES (%s, %s, %s, %s,%s)',
-            ('3',
-             '1', # Another great classic!
+            ('Polsemestrálny test',
+             'L101', # Another great classic!
              'Polsemestrálny test 2. skupina',
              'Test z prvých 3 látok predmetu',
              '2022-12-12'
