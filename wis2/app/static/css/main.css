@@ -18,7 +18,7 @@ li a {
   display: block;
   color: white;
   text-align: center;
-  padding: 14px 18px;
+  padding: 14px 17px;
   text-decoration: none;
   border-right: 1px solid;
 }
@@ -29,7 +29,7 @@ img {
 }
 
 a {
-  color: black;
+  color: rgb(0, 135, 198);
 }
 
 p {
@@ -39,11 +39,18 @@ p {
 
 table, th, td {
   border: 1px solid;
+  font-family: "helvetica neue", helvetica, arial, sans-serif;
+  border-color: rgb(113, 113, 113);
+  background-color: rgb(247, 247, 175);
+  border-collapse: collapse;
 }
 
-/* Change the link color to #111 (black) on hover */
+.wisblue {
+  background-color: rgb(173, 216, 230);
+}
+
 li a:hover {
-  background-color: rgb(24, 101, 196);
+  background-color: rgb(44, 185, 241);
 }
 
 button {
@@ -64,3 +71,4 @@ button:hover, input:hover[type=button], input:hover[type=submit], input:hover[ty
 a {
   text-decoration: none;
 }
+

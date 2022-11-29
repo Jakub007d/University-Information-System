@@ -15,7 +15,7 @@
         {% endif %}
         {% if login != "" %}
         <li><a href = "{{url_for('garantedCourses')}}">Garantované Kurzy</a></li>
-        <li><a href = "{{url_for('logout')}}">Učené Kurzy</a></li>
+        <li><a href = "{{url_for('taughtCourses')}}">Učené Kurzy</a></li>
         <li><a href = "{{url_for('myCourses')}}">Navštevované Kurzy</a></li>
         <li><a href = "{{url_for('mojProfil')}}">Môj Profil</a></li>
         <li><a href= "{{url_for('addCourse')}}">Pridanie Kurzu</a></li>
@@ -28,11 +28,11 @@
     <h1>Vytaj na najlešej a najsofistikovanejšej Houm Páži</h1>
     <h1>{% block title %} Kurzy: {% endblock %}</h1>
     <table>
-        <tr>
-        <th>Meno</th>
-        <th>Garant</th>
-        <th>Typ</th>
-        <th>Popis</th>
+        <tr >
+        <th class="wisblue">Meno</th>
+        <th class="wisblue">Garant</th>
+        <th class="wisblue">Typ</th>
+        <th class="wisblue">Popis</th>
         </tr>
     {% for course in courses %}
         {% if course[4] == True %}
