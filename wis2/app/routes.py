@@ -114,7 +114,7 @@ def myCourses():
 @app.route('/add_termin', methods=['GET','POST'])
 def addTermin():
     form = newTermin()
-    #form1 = newNews()
+    form1 = newNews()
     coursesModel = Courses()
     course_id = request.form
     course_id = course_id.getlist('course')
@@ -132,9 +132,9 @@ def addTermin():
         coursesModel.addTerminToCourse(form.type.data,form.room.data,form.name.data,form.description.data,form.date.data,course_id)
         return redirect(url_for("homePage"))
     
-    #if form1.validate_on_submit():
-    #    coursesModel.addNewsToCourse(form1.news.data,course_id)
-    return render_template("termin_add.html",form=form,course=course_id)
+    if form1.validate_on_submit():
+        coursesModel.addNewsToCourse(form1.news.data,course_id)
+    return render_template("termin_add.html",form=form,course=course_id,form1=form1)
 
 
 @app.route('/accept_student',methods=['GET','POST'])

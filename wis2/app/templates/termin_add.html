@@ -52,7 +52,15 @@
                 {{ form.submit() }}
             </p>
         </form>
-        
+        <form action="" method="post" novalidate>
+            {{ form1.hidden_tag() }}
+            <p>
+                {{ form1.news.label}}
+                {{ form1.news}}
+            </p>
+            <p>
+                {{ form1.submit() }}
+            </p>
     {% endblock %}
 
 </html>
