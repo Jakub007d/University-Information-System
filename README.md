@@ -18,13 +18,10 @@ Course Page:
 ![Courses](/Images/HomePage.png)
 
 Course Registration:
-![Course Registration](Images/PridanieKurzu.png)
+![Course Registration](Images/Pridaniekurzu.png)
 
 Evaluation:
 ![Evaluation](Images/Evaluation.png)
-
-Course Registration:
-![Course Registration](Images/PridanieKurzu.png)
 
 Terms:
 ![Terms](Images/Terminy.png)
