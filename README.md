@@ -12,3 +12,5 @@ The passwords of users are hashed by using flask_bcrypt library and stored to ea
 Database is implemented using PostgreSQL.
 
 The Information system is no longer hosted on any hosting service.
+
+![Courses](/Images/HomePage.png)
