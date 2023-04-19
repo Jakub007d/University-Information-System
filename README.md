@@ -13,4 +13,18 @@ Database is implemented using PostgreSQL.
 
 The Information system is no longer hosted on any hosting service.
 
+Course Page:
+
 ![Courses](/Images/HomePage.png)
+
+Course Registration:
+![Course Registration](/PridanieKurzu/.png)
+
+Evaluation:
+![Evaluation](/PridanieKurzu/Evaluation.png)
+
+Course Registration:
+![Course Registration](/PridanieKurzu/.png)
+
+Terms:
+![Terms](/Terminy/.png)
